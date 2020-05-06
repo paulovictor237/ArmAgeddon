@@ -1,0 +1,1 @@
+/home/peve/ws_moveit/src/moveit_tutorials/doc/move_group_python_interface/scripts/move_group_python_interface_tutorial.py
