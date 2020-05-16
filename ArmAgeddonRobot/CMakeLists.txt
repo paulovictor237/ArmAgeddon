@@ -1,3 +1,6 @@
+#===========================================================================
+# ... ArmAgeddonRobot (2020) ...
+#===========================================================================
 cmake_minimum_required(VERSION 3.0.2)
 project(ArmAgeddonRobot)
 
@@ -10,6 +13,7 @@ install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 install(DIRECTORY config DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 #===========================================================================
 # ... ws_moveit/src/moveit_tutorials/CMakeLists.txt ...
+#===========================================================================
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -35,14 +39,12 @@ find_package(Boost REQUIRED system filesystem date_time thread)
 
 set(THIS_PACKAGE_INCLUDE_DIRS doc/interactivity/include)
 
-###########
 ## Build ##
-###########
-
 include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})
 
 #===========================================================================
 # ... Mastering ROS for Robotics Programming (2018) ...
+#===========================================================================
 # find_package(catkin REQUIRED COMPONENTS
 #   cmake_modules
 #   roscpp
@@ -58,6 +60,8 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_
 # add_executable(pick_place_3 src/pick_place_3.cpp)
 # add_dependencies(pick_place_3 seven_dof_arm_test_generate_messages_cpp)
 # target_link_libraries(pick_place_3 ${catkin_LIBRARIES})
+#===========================================================================
+# ... ## Testing ## ...
 #===========================================================================
 # ... moveit_tutorials/doc/move_group_python_interface ...
 install(PROGRAMS
