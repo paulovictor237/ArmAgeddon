@@ -1,29 +1,34 @@
 {
-  "configurations": [
-    {
-      "browse": {
-        "databaseFilename": "",
-        "limitSymbolsToIncludedHeaders": true
-      },
-      "includePath": [
-        "/home/peve/ws_moveit/devel/include/**",
-        "/opt/ros/melodic/include/**",
-        "/home/peve/ws_moveit/src/moveit/moveit_planners/chomp/chomp_motion_planner/include/**",
-        "/home/peve/ws_moveit/src/geometric_shapes/include/**",
-        "/home/peve/ws_moveit/src/moveit/moveit_experimental/moveit_jog_arm/include/**",
-        "/home/peve/ws_moveit/src/moveit/moveit_planners/chomp/chomp_interface/include/**",
-        "/home/peve/ws_moveit/src/moveit/moveit_ros/benchmarks/include/**",
-        "/home/peve/ws_moveit/src/moveit/moveit_plugins/moveit_ros_control_interface/include/**",
-        "/home/peve/ws_moveit/src/moveit/moveit_ros/move_group/include/**",
-        "/home/peve/ws_moveit/src/moveit/moveit_ros/occupancy_map_monitor/include/**",
-        "/home/peve/ws_moveit/src/moveit/moveit_ros/robot_interaction/include/**",
-        "/home/peve/ws_moveit/src/moveit/moveit_setup_assistant/include/**",
-        "/home/peve/ws_moveit/src/moveit/moveit_plugins/moveit_simple_controller_manager/include/**",
-        "/home/peve/ws_moveit/src/moveit_visual_tools/include/**",
-        "/home/peve/ws_moveit/src/rviz_visual_tools/include/**",
-        "/usr/include/**"
-      ],
-      "name": "ROS"
-    }
-  ]
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/peve/ws_moveit/devel/include/**",
+                "/opt/ros/melodic/include/**",
+                "/home/peve/ws_moveit/src/moveit/moveit_planners/chomp/chomp_motion_planner/include/**",
+                "/home/peve/ws_moveit/src/geometric_shapes/include/**",
+                "/home/peve/ws_moveit/src/moveit/moveit_experimental/moveit_jog_arm/include/**",
+                "/home/peve/ws_moveit/src/moveit/moveit_planners/chomp/chomp_interface/include/**",
+                "/home/peve/ws_moveit/src/moveit/moveit_ros/benchmarks/include/**",
+                "/home/peve/ws_moveit/src/moveit/moveit_plugins/moveit_ros_control_interface/include/**",
+                "/home/peve/ws_moveit/src/moveit/moveit_ros/move_group/include/**",
+                "/home/peve/ws_moveit/src/moveit/moveit_ros/occupancy_map_monitor/include/**",
+                "/home/peve/ws_moveit/src/moveit/moveit_ros/robot_interaction/include/**",
+                "/home/peve/ws_moveit/src/moveit/moveit_setup_assistant/include/**",
+                "/home/peve/ws_moveit/src/moveit/moveit_plugins/moveit_simple_controller_manager/include/**",
+                "/home/peve/ws_moveit/src/moveit_visual_tools/include/**",
+                "/home/peve/ws_moveit/src/rviz_visual_tools/include/**",
+                "/usr/include/**"
+            ],
+            "name": "ROS",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14"
+        }
+    ],
+    "version": 4
 }
