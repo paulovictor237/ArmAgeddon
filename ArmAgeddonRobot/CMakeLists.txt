@@ -1,7 +1,5 @@
-#===========================================================================
-# ... Packs originais do MoveIt ...
-cmake_minimum_required(VERSION 3.1.3)
-project(ArmAgeddon)
+cmake_minimum_required(VERSION 3.0.2)
+project(ArmAgeddonRobot)
 
 find_package(catkin REQUIRED)
 
@@ -61,7 +59,6 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_
 # add_dependencies(pick_place_3 seven_dof_arm_test_generate_messages_cpp)
 # target_link_libraries(pick_place_3 ${catkin_LIBRARIES})
 #===========================================================================
-
 # ... moveit_tutorials/doc/move_group_python_interface ...
 install(PROGRAMS
   scripts/move_group_python_interface_tutorial.py
