@@ -1,0 +1,74 @@
+#===========================================================================
+# ... Packs originais do MoveIt ...
+cmake_minimum_required(VERSION 3.1.3)
+project(ArmAgeddon)
+
+find_package(catkin REQUIRED)
+
+catkin_package()
+
+install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  PATTERN "setup_assistant.launch" EXCLUDE)
+install(DIRECTORY config DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+#===========================================================================
+# ... ws_moveit/src/moveit_tutorials/CMakeLists.txt ...
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+find_package(catkin REQUIRED COMPONENTS
+    interactive_markers
+    moveit_core
+    moveit_visual_tools
+    moveit_ros_planning
+    moveit_ros_planning_interface
+    moveit_ros_perception
+    pluginlib
+    geometric_shapes
+    pcl_ros
+    pcl_conversions
+    rosbag
+    tf2_ros
+    tf2_eigen
+    tf2_geometry_msgs
+)
+
+find_package(Eigen3 REQUIRED)
+find_package(Boost REQUIRED system filesystem date_time thread)
+
+set(THIS_PACKAGE_INCLUDE_DIRS doc/interactivity/include)
+
+###########
+## Build ##
+###########
+
+include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})
+
+#===========================================================================
+# ... Mastering ROS for Robotics Programming (2018) ...
+# find_package(catkin REQUIRED COMPONENTS
+#   cmake_modules
+#   roscpp
+#   std_msgs
+# )
+# set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
+# ## System dependencies are found with CMake's conventions
+# find_package(Boost REQUIRED COMPONENTS system)
+# ## Build ##
+# include_directories(${catkin_INCLUDE_DIRS})
+
+### Declare a cpp executable
+# add_executable(pick_place_3 src/pick_place_3.cpp)
+# add_dependencies(pick_place_3 seven_dof_arm_test_generate_messages_cpp)
+# target_link_libraries(pick_place_3 ${catkin_LIBRARIES})
+#===========================================================================
+
+# ... moveit_tutorials/doc/move_group_python_interface ...
+install(PROGRAMS
+  scripts/move_group_python_interface_tutorial.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+# ... moveit_tutorials/doc/move_group_interface ...
+add_executable(move_group_interface_tutorial src/move_group_interface_tutorial.cpp)
+target_link_libraries(move_group_interface_tutorial ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS move_group_interface_tutorial DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
