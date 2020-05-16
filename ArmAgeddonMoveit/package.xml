@@ -1,6 +1,6 @@
 <package>
 
-  <name>ArmAgeddon</name>
+  <name>ArmAgeddonMoveit</name>
   <version>0.3.0</version>
   <description>
      An automatically generated package with all the configuration and launch files for using the panda with the MoveIt Motion Planning Framework
