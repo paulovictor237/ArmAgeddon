@@ -155,8 +155,8 @@ panda_arm:
     - SPARStwo
   projection_evaluator: joints(panda_joint1,panda_joint2)
   longest_valid_segment_fraction: 0.005
-hand:
-  default_planner_config: RRT
+panda_hand:
+  default_planner_config: None
   planner_configs:
     - AnytimePathShortening
     - SBL
