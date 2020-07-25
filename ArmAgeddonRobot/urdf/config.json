@@ -1,0 +1,10 @@
+{
+    "documentId": "f7c9ebf9fca2f5e539f04638",
+    "outputFormat": "urdf",
+    "packageName": "ArmAgeddonRobot/urdf/",
+    "robotName": "ArmAgeddon",
+    "addDummyBaseLink": true,
+    "useScads": false
+    // "drawCollisions": true,
+    // "mergeSTLs": true
+}
