@@ -11,8 +11,8 @@ x= 5.48191e-16;
 y= 0.086;
 z= 0.128;
 
-translate([x*escala, y*escala+90, z*escala-80]) {
+translate([x*escala, y*escala+90, z*escala-75]) {
     rotate([0, 0, 0]) {
-        cylinder(r=60, h=750, center=false);
+        cylinder(r=60, h=745, center=false);
     }
 }

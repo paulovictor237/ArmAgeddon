@@ -12,6 +12,6 @@ z= 1.3123;
 
 translate([x*escala, y*escala+55, z*escala-65]) {
     rotate([0, 0, 0]) {
-        cylinder(r=50, h=130, center=false);
+        cylinder(r=50, h=125, center=false);
     }
 }

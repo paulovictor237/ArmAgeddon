@@ -18,7 +18,7 @@
 <collision>
 <origin xyz="0 0 0" rpy="0 -0 0" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/visual/base.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/collision/base.stl" scale="0.001 0.001 0.001"/>
 </geometry>
 <material name="base_material">
 <color rgba="0.0862745 0.317647 0.690196 1.0"/>
@@ -44,7 +44,7 @@
 <collision>
 <origin xyz="-2.77833e-17 -9.6662e-16 -0.038" rpy="0 -0 5.29517e-49" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/visual/link1.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/collision/link1.stl" scale="0.001 0.001 0.001"/>
 </geometry>
 <material name="link1_material">
 <color rgba="0.0862745 0.317647 0.690196 1.0"/>
@@ -70,7 +70,7 @@
 <collision>
 <origin xyz="5.48191e-16 -0.086 -0.128" rpy="0 -0 6.3463e-48" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/visual/link2.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/collision/link2.stl" scale="0.001 0.001 0.001"/>
 </geometry>
 <material name="link2_material">
 <color rgba="0.0862745 0.317647 0.690196 1.0"/>
@@ -96,7 +96,7 @@
 <collision>
 <origin xyz="1.79739e-15 -0.107891 -0.7407" rpy="0 -0 -2.65037e-32" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/visual/link3.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/collision/link3.stl" scale="0.001 0.001 0.001"/>
 </geometry>
 <material name="link3_material">
 <color rgba="0.0862745 0.317647 0.690196 1.0"/>
@@ -122,7 +122,7 @@
 <collision>
 <origin xyz="-1.12684e-07 -0.109891 -1.3123" rpy="0 -0 -1.81122e-33" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/visual/link4.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/collision/link4.stl" scale="0.001 0.001 0.001"/>
 </geometry>
 <material name="link4_material">
 <color rgba="0.0862745 0.317647 0.690196 1.0"/>
@@ -148,7 +148,7 @@
 <collision>
 <origin xyz="1.12684e-07 -0.16389 -1.374" rpy="0 -0 8.87983e-34" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/visual/link5.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/collision/link5.stl" scale="0.001 0.001 0.001"/>
 </geometry>
 <material name="link5_material">
 <color rgba="0.0862745 0.317647 0.690196 1.0"/>
@@ -174,7 +174,7 @@
 <collision>
 <origin xyz="1.05754e-14 -0.225591 -1.428" rpy="0 -0 -1.1438e-32" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/visual/flange.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/collision/flange.stl" scale="0.001 0.001 0.001"/>
 </geometry>
 <material name="flange_material">
 <color rgba="0.0862745 0.317647 0.690196 1.0"/>
@@ -200,7 +200,7 @@
 <collision>
 <origin xyz="-0.014515 -0.0528228 -0.00593515" rpy="0 -0 9.74349e-33" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/visual/welding_torch.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/collision/welding_torch.stl" scale="0.001 0.001 0.001"/>
 </geometry>
 <material name="welding_torch_material">
 <color rgba="0.913725 0.647059 0.329412 1.0"/>
@@ -223,7 +223,7 @@
 <color rgba="0 0 1 1.0"/>
 </material>
 </visual>
-<collision>
+<!-- <collision>
 <origin xyz="-8.67362e-19 0 -0.09" rpy="-1.79773e-17 -1.55779e-18 7.11059e-19" />
 <geometry>
 <mesh filename="package://ArmAgeddonRobot/urdf/visual/cubo.stl"/>
@@ -231,7 +231,7 @@
 <material name="cubo_material">
 <color rgba="0 0 1 1.0"/>
 </material>
-</collision>
+</collision> -->
 <inertial>
 <origin xyz="-8.87072e-19 3.29299e-18 -0.045" rpy="0 0 0"/>
 <mass value="0.766908" />
@@ -239,22 +239,22 @@
 </inertial>
 </link>
 
-<joint name="tcp" type="revolute">
+<joint name="tcp" type="fixed">
 <origin xyz="0.00106366 -0.430726 0.00599082" rpy="0.677166 0.00744708 -3.13561" />
 <parent link="welding_torch_1" />
 <child link="cubo_1" />
-<axis xyz="0 0 1"/>
+<!-- <axis xyz="0 0 1"/>
 <limit effort="1" velocity="20" lower="-6.28319" upper="6.28319"/>
-<joint_properties friction="0.0"/>
+<joint_properties friction="0.0"/> -->
 </joint>
 
-<joint name="flange" type="revolute">
+<joint name="flange" type="fixed">
 <origin xyz="-1.6404e-16 0.024 0" rpy="-1.3561e-16 -0 3.14159" />
 <parent link="flange_1" />
 <child link="welding_torch_1" />
-<axis xyz="0 1 0"/>
+<!-- <axis xyz="0 1 0"/>
 <limit effort="1" velocity="20" lower="-6.28319" upper="6.28319"/>
-<joint_properties friction="0.0"/>
+<joint_properties friction="0.0"/> -->
 </joint>
 
 <joint name="motor5" type="revolute">
