@@ -1,5 +1,5 @@
 escala=1000;
-% scale(escala) import("../visual/base.stl");
+% scale(escala) import("../visual/link2.stl");
 
 // Append pure shapes (cube, cylinder and sphere), e.g:
 // cube([10, 10, 10], center=true);
@@ -7,12 +7,12 @@ escala=1000;
 // sphere(10);
 // coordenadas
 
-x=0;
-y=0;
-z=0;
+x= 5.48191e-16;
+y= 0.086;
+z= 0.128;
 
-translate([x*escala, y*escala, z*escala]) {
+translate([x*escala, y*escala+90, z*escala-80]) {
     rotate([0, 0, 0]) {
-        cylinder(r=100, h=35,center=false);
+        cylinder(r=60, h=750, center=false);
     }
 }

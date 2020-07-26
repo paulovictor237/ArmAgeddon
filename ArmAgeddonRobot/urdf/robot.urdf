@@ -9,7 +9,7 @@
 <visual>
 <origin xyz="0 0 0" rpy="0 -0 0" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/base.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/base.stl"/>
 </geometry>
 <material name="base_material">
 <color rgba="0.0862745 0.317647 0.690196 1.0"/>
@@ -18,7 +18,7 @@
 <collision>
 <origin xyz="0 0 0" rpy="0 -0 0" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/base.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/base.stl"/>
 </geometry>
 <material name="base_material">
 <color rgba="0.0862745 0.317647 0.690196 1.0"/>
@@ -35,19 +35,19 @@
 <visual>
 <origin xyz="-2.77833e-17 -9.6662e-16 -0.038" rpy="0 -0 5.29517e-49" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/link1.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/link1.stl"/>
 </geometry>
 <material name="link1_material">
-<color rgba="0.439216 0.47451 0.501961 1.0"/>
+<color rgba="0.0862745 0.317647 0.690196 1.0"/>
 </material>
 </visual>
 <collision>
 <origin xyz="-2.77833e-17 -9.6662e-16 -0.038" rpy="0 -0 5.29517e-49" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/link1.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/link1.stl"/>
 </geometry>
 <material name="link1_material">
-<color rgba="0.439216 0.47451 0.501961 1.0"/>
+<color rgba="0.0862745 0.317647 0.690196 1.0"/>
 </material>
 </collision>
 <inertial>
@@ -61,19 +61,19 @@
 <visual>
 <origin xyz="5.48191e-16 -0.086 -0.128" rpy="0 -0 6.3463e-48" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/link2.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/link2.stl"/>
 </geometry>
 <material name="link2_material">
-<color rgba="0.439216 0.47451 0.501961 1.0"/>
+<color rgba="0.0862745 0.317647 0.690196 1.0"/>
 </material>
 </visual>
 <collision>
 <origin xyz="5.48191e-16 -0.086 -0.128" rpy="0 -0 6.3463e-48" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/link2.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/link2.stl"/>
 </geometry>
 <material name="link2_material">
-<color rgba="0.439216 0.47451 0.501961 1.0"/>
+<color rgba="0.0862745 0.317647 0.690196 1.0"/>
 </material>
 </collision>
 <inertial>
@@ -87,19 +87,19 @@
 <visual>
 <origin xyz="1.79739e-15 -0.107891 -0.7407" rpy="0 -0 -2.65037e-32" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/link3.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/link3.stl"/>
 </geometry>
 <material name="link3_material">
-<color rgba="0.439216 0.47451 0.501961 1.0"/>
+<color rgba="0.0862745 0.317647 0.690196 1.0"/>
 </material>
 </visual>
 <collision>
 <origin xyz="1.79739e-15 -0.107891 -0.7407" rpy="0 -0 -2.65037e-32" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/link3.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/link3.stl"/>
 </geometry>
 <material name="link3_material">
-<color rgba="0.439216 0.47451 0.501961 1.0"/>
+<color rgba="0.0862745 0.317647 0.690196 1.0"/>
 </material>
 </collision>
 <inertial>
@@ -113,19 +113,19 @@
 <visual>
 <origin xyz="-1.12684e-07 -0.109891 -1.3123" rpy="0 -0 -1.81122e-33" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/link4.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/link4.stl"/>
 </geometry>
 <material name="link4_material">
-<color rgba="0.439216 0.47451 0.501961 1.0"/>
+<color rgba="0.0862745 0.317647 0.690196 1.0"/>
 </material>
 </visual>
 <collision>
 <origin xyz="-1.12684e-07 -0.109891 -1.3123" rpy="0 -0 -1.81122e-33" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/link4.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/link4.stl"/>
 </geometry>
 <material name="link4_material">
-<color rgba="0.439216 0.47451 0.501961 1.0"/>
+<color rgba="0.0862745 0.317647 0.690196 1.0"/>
 </material>
 </collision>
 <inertial>
@@ -139,19 +139,19 @@
 <visual>
 <origin xyz="1.12684e-07 -0.16389 -1.374" rpy="0 -0 8.87983e-34" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/link5.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/link5.stl"/>
 </geometry>
 <material name="link5_material">
-<color rgba="0.439216 0.47451 0.501961 1.0"/>
+<color rgba="0.0862745 0.317647 0.690196 1.0"/>
 </material>
 </visual>
 <collision>
 <origin xyz="1.12684e-07 -0.16389 -1.374" rpy="0 -0 8.87983e-34" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/link5.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/link5.stl"/>
 </geometry>
 <material name="link5_material">
-<color rgba="0.439216 0.47451 0.501961 1.0"/>
+<color rgba="0.0862745 0.317647 0.690196 1.0"/>
 </material>
 </collision>
 <inertial>
@@ -165,7 +165,7 @@
 <visual>
 <origin xyz="1.05754e-14 -0.225591 -1.428" rpy="0 -0 -1.1438e-32" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/flange.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/flange.stl"/>
 </geometry>
 <material name="flange_material">
 <color rgba="0.0862745 0.317647 0.690196 1.0"/>
@@ -174,7 +174,7 @@
 <collision>
 <origin xyz="1.05754e-14 -0.225591 -1.428" rpy="0 -0 -1.1438e-32" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/flange.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/flange.stl"/>
 </geometry>
 <material name="flange_material">
 <color rgba="0.0862745 0.317647 0.690196 1.0"/>
@@ -191,7 +191,7 @@
 <visual>
 <origin xyz="-0.014515 -0.0528228 -0.00593515" rpy="0 -0 9.74349e-33" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/welding_torch.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/welding_torch.stl"/>
 </geometry>
 <material name="welding_torch_material">
 <color rgba="0.913725 0.647059 0.329412 1.0"/>
@@ -200,7 +200,7 @@
 <collision>
 <origin xyz="-0.014515 -0.0528228 -0.00593515" rpy="0 -0 9.74349e-33" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/welding_torch.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/welding_torch.stl"/>
 </geometry>
 <material name="welding_torch_material">
 <color rgba="0.913725 0.647059 0.329412 1.0"/>
@@ -217,7 +217,7 @@
 <visual>
 <origin xyz="-8.67362e-19 0 -0.09" rpy="-1.79773e-17 -1.55779e-18 7.11059e-19" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/cubo.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/cubo.stl"/>
 </geometry>
 <material name="cubo_material">
 <color rgba="0 0 1 1.0"/>
@@ -226,7 +226,7 @@
 <collision>
 <origin xyz="-8.67362e-19 0 -0.09" rpy="-1.79773e-17 -1.55779e-18 7.11059e-19" />
 <geometry>
-<mesh filename="package://ArmAgeddonRobot/urdf/cubo.stl"/>
+<mesh filename="package://ArmAgeddonRobot/urdf/visual/cubo.stl"/>
 </geometry>
 <material name="cubo_material">
 <color rgba="0 0 1 1.0"/>
