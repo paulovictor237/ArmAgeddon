@@ -1,11 +1,11 @@
 moveit_setup_assistant_config:
   URDF:
     package: ArmAgeddonRobot
-    relative_path: urdf/panda_arm_hand.urdf.xacro
+    relative_path: urdf/robot.urdf
     xacro_args: ""
   SRDF:
-    relative_path: config/panda.srdf
+    relative_path: config/ArmAgeddon.srdf
   CONFIG:
     author_name: Paulo Victor Duarte
     author_email: paulovictor237@gmail.com
-    generated_timestamp: 1589650510
+    generated_timestamp: 1595780757
