@@ -73,3 +73,14 @@ install(PROGRAMS
 add_executable(move_group_interface_tutorial src/move_group_interface_tutorial.cpp)
 target_link_libraries(move_group_interface_tutorial ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS move_group_interface_tutorial DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+
+# ... listener ...
+add_executable(listener src/listener.cpp)
+target_link_libraries(listener ${catkin_LIBRARIES})
+install(TARGETS listener DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+## Declare a cpp executable
+add_executable(test_custom_node_2 src/test_custom2.cpp)
+target_link_libraries(test_custom_node_2 ${catkin_LIBRARIES})
+install(TARGETS test_custom_node_2 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

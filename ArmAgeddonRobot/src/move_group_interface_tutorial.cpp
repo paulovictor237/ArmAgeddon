@@ -60,7 +60,7 @@ int main(int argc, char** argv)
   // MoveIt operates on sets of joints called "planning groups" and stores them in an object called
   // the `JointModelGroup`. Throughout MoveIt the terms "planning group" and "joint model group"
   // are used interchangably.
-  static const std::string PLANNING_GROUP = "panda_arm";
+  static const std::string PLANNING_GROUP = "robot_arm";
 
   // The :planning_interface:`MoveGroupInterface` class can be easily
   // setup using just the name of the planning group you would like to control and plan for.
@@ -80,7 +80,7 @@ int main(int argc, char** argv)
   // The package MoveItVisualTools provides many capabilities for visualizing objects, robots,
   // and trajectories in RViz as well as debugging tools such as step-by-step introspection of a script.
   namespace rvt = rviz_visual_tools;
-  moveit_visual_tools::MoveItVisualTools visual_tools("panda_link0");
+  moveit_visual_tools::MoveItVisualTools visual_tools("base_link");
   visual_tools.deleteAllMarkers();
 
   // Remote control is an introspection tool that allows users to step through a high level script
