@@ -84,3 +84,21 @@ install(TARGETS listener DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 add_executable(test_custom_node_2 src/test_custom2.cpp)
 target_link_libraries(test_custom_node_2 ${catkin_LIBRARIES})
 install(TARGETS test_custom_node_2 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+## Declare a cpp executable
+add_executable(test_custom_node_1 src/test_custom1.cpp)
+target_link_libraries(test_custom_node_1 ${catkin_LIBRARIES})
+install(TARGETS test_custom_node_1 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+## Declare a cpp executable
+add_executable(DOF5_custom1 src/DOF5_custom1.cpp)
+target_link_libraries(DOF5_custom1 ${catkin_LIBRARIES})
+install(TARGETS DOF5_custom1 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+## Declare a cpp executable
+add_executable(DOF5_custom2 src/DOF5_custom2.cpp)
+target_link_libraries(DOF5_custom2 ${catkin_LIBRARIES})
+install(TARGETS DOF5_custom2 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+## Declare a cpp executable
+add_executable(DOF5_random src/DOF5_random.cpp)
+target_link_libraries(DOF5_random ${catkin_LIBRARIES})
+install(TARGETS DOF5_random DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

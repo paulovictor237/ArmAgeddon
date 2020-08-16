@@ -48,7 +48,16 @@ Visualization Manager:
       Marker Topic: /rviz_visual_tools
       Name: MarkerArray
       Namespaces:
-        {}
+        Path: true
+        Sphere: true
+        Text: true
+        goal: true
+        pose1: true
+        pt0: true
+        pt1: true
+        pt2: true
+        pt3: true
+        start: true
       Queue Size: 100
       Value: true
     - Acceleration_Scaling_Factor: 0.1
@@ -247,25 +256,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 3.817392110824585
+      Distance: 3.350217580795288
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.06308549642562866
-        Y: -0.0024984776973724365
-        Z: 7.003551445450285e-7
+        X: -0.34987008571624756
+        Y: 0.02541220188140869
+        Z: -1.4900592759659048e-8
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.40479692816734314
+      Pitch: 0.5047956109046936
       Target Frame: base_link
       Value: XYOrbit (rviz)
-      Yaw: 0.6717441082000732
+      Yaw: 0.9517480731010437
     Saved: ~
 Window Geometry:
   Displays:
