@@ -102,3 +102,8 @@ install(TARGETS DOF5_custom2 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 add_executable(DOF5_random src/DOF5_random.cpp)
 target_link_libraries(DOF5_random ${catkin_LIBRARIES})
 install(TARGETS DOF5_random DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+## Declare a cpp executable
+add_executable(cartesian_path src/cartesian_path.cpp)
+target_link_libraries(cartesian_path ${catkin_LIBRARIES})
+install(TARGETS cartesian_path DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
