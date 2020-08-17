@@ -45,6 +45,9 @@
 
 #include <moveit_visual_tools/moveit_visual_tools.h>
 
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf2/LinearMath/Quaternion.h>
+
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "move_group_interface_tutorial");
@@ -56,6 +59,9 @@ int main(int argc, char** argv)
   //
   // Setup
   // ^^^^^
+  tf2::Quaternion myQuaternion;
+  myQuaternion.setRPY(3.14159, 0, 3.14159); // Create this quaternion from roll/pitch/yaw (in radians)
+  myQuaternion.normalize();
   //
   // MoveIt operates on sets of joints called "planning groups" and stores them in an object called
   // the `JointModelGroup`. Throughout MoveIt the terms "planning group" and "joint model group"
@@ -118,7 +124,7 @@ int main(int argc, char** argv)
   // We can plan a motion for this group to a desired pose for the
   // end-effector.
   geometry_msgs::Pose target_pose1;
-  target_pose1.orientation.w = 1.0;
+  target_pose1.orientation = tf2::toMsg(myQuaternion);
   target_pose1.position.x = 0.28;
   target_pose1.position.y = -0.2;
   target_pose1.position.z = 0.5;
@@ -199,9 +205,9 @@ int main(int argc, char** argv)
   // Let's specify a path constraint and a pose goal for our group.
   // First define the path constraint.
   moveit_msgs::OrientationConstraint ocm;
-  ocm.link_name = "panda_link7";
-  ocm.header.frame_id = "panda_link0";
-  ocm.orientation.w = 1.0;
+  ocm.link_name = "grasping_frame";
+  ocm.header.frame_id = "base_1";
+  ocm.orientation = tf2::toMsg(myQuaternion);
   ocm.absolute_x_axis_tolerance = 0.1;
   ocm.absolute_y_axis_tolerance = 0.1;
   ocm.absolute_z_axis_tolerance = 0.1;
@@ -218,7 +224,7 @@ int main(int argc, char** argv)
   // state to a new pose.
   robot_state::RobotState start_state(*move_group.getCurrentState());
   geometry_msgs::Pose start_pose2;
-  start_pose2.orientation.w = 1.0;
+  start_pose2.orientation = tf2::toMsg(myQuaternion);
   start_pose2.position.x = 0.55;
   start_pose2.position.y = -0.05;
   start_pose2.position.z = 0.8;
@@ -318,7 +324,7 @@ int main(int argc, char** argv)
 
   // Define a pose for the box (specified relative to frame_id)
   geometry_msgs::Pose box_pose;
-  box_pose.orientation.w = 1.0;
+  box_pose.orientation = tf2::toMsg(myQuaternion);
   box_pose.position.x = 0.4;
   box_pose.position.y = -0.2;
   box_pose.position.z = 1.0;
@@ -344,7 +350,7 @@ int main(int argc, char** argv)
   // Now when we plan a trajectory it will avoid the obstacle
   move_group.setStartState(*move_group.getCurrentState());
   geometry_msgs::Pose another_pose;
-  another_pose.orientation.w = 1.0;
+  another_pose.orientation = tf2::toMsg(myQuaternion);
   another_pose.position.x = 0.4;
   another_pose.position.y = -0.4;
   another_pose.position.z = 0.9;

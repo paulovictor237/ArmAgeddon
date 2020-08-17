@@ -96,6 +96,8 @@ int main(int argc, char **argv)
   joint_group_positions[1] = 0.0;  // radians
   joint_group_positions[2] = 0.0;  // radians
   joint_group_positions[3] = 0.0;  // radians
+  joint_group_positions[4] = 0.0;  // radians
+  joint_group_positions[5] = 0.0;  // radians
   // joint_group_positions[4] = 0.0;  // radians
   // joint_group_positions[5] = 1.10;  // radians
   group.setJointValueTarget(joint_group_positions);

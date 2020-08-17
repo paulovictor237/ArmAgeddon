@@ -111,8 +111,6 @@ int main(int argc, char **argv)
   group.move();
   // Batch publishing is used to reduce the number of messages being sent to RViz for large visualizations
   visual_tools.trigger();
-  // prompt trava o programa esperando o proximo passo
-  visual_tools.prompt("Pressione 'next'no RvizVisualToolsGui para continuar");
 
   ros::shutdown();
 

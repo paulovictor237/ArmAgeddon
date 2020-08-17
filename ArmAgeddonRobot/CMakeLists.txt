@@ -86,9 +86,9 @@ target_link_libraries(test_custom_node_2 ${catkin_LIBRARIES})
 install(TARGETS test_custom_node_2 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Declare a cpp executable
-add_executable(test_custom_node_1 src/test_custom1.cpp)
-target_link_libraries(test_custom_node_1 ${catkin_LIBRARIES})
-install(TARGETS test_custom_node_1 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+add_executable(GoHome src/GoHome.cpp)
+target_link_libraries(GoHome ${catkin_LIBRARIES})
+install(TARGETS GoHome DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Declare a cpp executable
 add_executable(DOF5_custom1 src/DOF5_custom1.cpp)
