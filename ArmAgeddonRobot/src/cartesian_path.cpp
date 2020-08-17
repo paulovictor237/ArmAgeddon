@@ -98,8 +98,6 @@ int main(int argc, char **argv)
   joint_group_positions[3] = 0.0;  // radians
   joint_group_positions[4] = 0.0;  // radians
   joint_group_positions[5] = 0.0;  // radians
-  // joint_group_positions[4] = 0.0;  // radians
-  // joint_group_positions[5] = 1.10;  // radians
   group.setJointValueTarget(joint_group_positions);
   //move o objeto
   group.move();
@@ -136,8 +134,7 @@ int main(int argc, char **argv)
   group.execute(my_plan);
   visual_tools.prompt("iniciar movimento de juntas");
  
-
-// aqui move o robo de fato.
+  // aqui move o robo de fato.
 	// group.move();
   // group.execute(my_plan);
 
@@ -160,13 +157,42 @@ int main(int argc, char **argv)
   visual_tools.publishText(text_pose, "Joint Space Goal", rvt::WHITE, rvt::XLARGE);
   visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
   visual_tools.trigger();
-  visual_tools.prompt("iniciar restricao de caminho");
+  visual_tools.prompt("iniciar movimento");
 
   group.execute(my_plan);
   visual_tools.trigger();
   visual_tools.deleteAllMarkers();
 
-  //===================================================
+  visual_tools.prompt("iniciar plano cartesiano");
+  target_pose1=group.getCurrentPose().pose;
+  std::vector<geometry_msgs::Pose> waypoints;
+  
+  waypoints.push_back(target_pose1);
+  target_pose1.position.z -= 0.2;
+  waypoints.push_back(target_pose1);  // down
+  target_pose1.position.y -= 0.2;
+  waypoints.push_back(target_pose1);  // right
+  target_pose1.position.z += 0.2;
+  target_pose1.position.y += 0.2;
+  target_pose1.position.x -= 0.2;
+  waypoints.push_back(target_pose1);  // up and left
+  // ################################################################
+  moveit_msgs::RobotTrajectory trajectory;
+  const double jump_threshold = 0.0;
+  const double eef_step = 0.01;
+  double fraction = group.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+  ROS_INFO_NAMED("tutorial", "Visualizing plan 4 (Cartesian path) (%.2f%% acheived)", fraction * 100.0);
+
+  // Visualize the plan in RViz
+  visual_tools.deleteAllMarkers();
+  visual_tools.publishText(text_pose, "Cartesian Path", rvt::WHITE, rvt::XLARGE);
+  visual_tools.publishPath(waypoints, rvt::LIME_GREEN, rvt::SMALL);
+  for (std::size_t i = 0; i < waypoints.size(); ++i)
+  visual_tools.publishAxisLabeled(waypoints[i], "pt" + std::to_string(i), rvt::SMALL);
+  visual_tools.trigger();
+  group.execute(trajectory);
+
+
   visual_tools.prompt("fim");
   ros::shutdown();
 
