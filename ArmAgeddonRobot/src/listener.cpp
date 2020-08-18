@@ -1,35 +1,52 @@
 #include <ros/package.h>
 #include <iostream>
-#include <iomanip>
 #include <fstream>
+#include <iomanip>      // std::setprecision & std::setw
+#include <algorithm>    // std::count
+#include <math.h>       // M_PI
 using namespace std;
+
+void outputLine( double x,double y,double z,double rx,double ry,double rz )
+{
+   cout.precision(17);
+   cout << std::fixed << std::setprecision(2);
+   std::cout.precision(2);
+   std::cout.setf(std::ios::fixed);
+   cout << setprecision(3) << fixed;
+   cout << "x: "  << x << setw( 8 ) 
+        << "y: "  << y << setw( 8 )
+        << "z: "  << z << setw( 8 )
+        << "rx: " << rx << setw( 8 ) 
+        << "ry: " << ry << setw( 8 )
+        << "rz: " << rz  
+        << endl;
+} // end function outputLine
 
 // ROS_INFO("%s\n", s.data.c_str());
 
 int main()
 {
-    int sum = 0;
-    int x;
+    string RelativePath=ros::package::getPath("ArmAgeddonRobot");
+    cout << RelativePath << endl;
 
-    string string_teste=ros::package::getPath("ArmAgeddonRobot");
-    cout << string_teste << endl;
+    ifstream inClientFile(RelativePath + "/src/test.txt");
 
-    ifstream inFile;
-
-    inFile.open(string_teste + "/src/test.txt");
-
-    if (!inFile)
-    {
-        cout << "Unable to open file\n";
-        exit(1); // terminate with error
-    }
-
-    while (inFile >> x)
-    {
-        sum = sum + x;
-    }
-
+    std::ifstream inFile(RelativePath + "/src/test.txt"); 
+    cout << "Numero de linhas: " << std::count(std::istreambuf_iterator<char>(inFile),std::istreambuf_iterator<char>(), '\n')+1 << endl;
     inFile.close();
-    cout << "Sum = " << sum << endl;
+
+
+    if(!inClientFile) {
+      cout << "Cannot open input file.\n";
+      return 1;
+    }
+
+    double x,y,z,rx,ry,rz;
+
+    while ( inClientFile >> x >> y >> z >> rx >> ry >> rz ){
+      outputLine(x,y,z,rx,ry,rz);
+    }
+    inClientFile.close();
+
     return 0;
 }
