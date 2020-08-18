@@ -4,7 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /MarkerArray1
+        - /TF1/Frames1
         - /MotionPlanning1
         - /MotionPlanning1/Planning Request1
       Splitter Ratio: 0.5801354646682739
@@ -43,21 +43,33 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 0.4000000059604645
+      Name: Axes
+      Radius: 0.014999999664723873
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz/TF
+      Enabled: false
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+      Marker Scale: 0.5
+      Name: TF
+      Show Arrows: false
+      Show Axes: true
+      Show Names: false
+      Tree:
+        {}
+      Update Interval: 0
+      Value: false
     - Class: rviz/MarkerArray
       Enabled: true
       Marker Topic: /rviz_visual_tools
       Name: MarkerArray
       Namespaces:
-        Path: true
-        Sphere: true
-        Text: true
-        goal: true
-        pose1: true
-        pt0: true
-        pt1: true
-        pt2: true
-        pt3: true
-        start: true
+        {}
       Queue Size: 100
       Value: true
     - Acceleration_Scaling_Factor: 0.1
@@ -256,25 +268,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 3.350217580795288
+      Distance: 3.228085517883301
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.34987008571624756
-        Y: 0.02541220188140869
-        Z: -1.4900592759659048e-8
+        X: -0.12316226959228516
+        Y: 0.02664315700531006
+        Z: 6.38875974345865e-7
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5047956109046936
+      Pitch: 0.28479522466659546
       Target Frame: base_link
       Value: XYOrbit (rviz)
-      Yaw: 0.9517480731010437
+      Yaw: 0.9067543148994446
     Saved: ~
 Window Geometry:
   Displays:

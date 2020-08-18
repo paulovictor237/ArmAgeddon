@@ -79,7 +79,7 @@ int main(int argc, char **argv)
   visual_tools.loadRemoteControl();
   // pacotes para a interface - text, cylinders, and spheres
   Eigen::Isometry3d text_pose = Eigen::Isometry3d::Identity();
-  text_pose.translation().z() = 0.7;
+  text_pose.translation().z() = 1.6;
   visual_tools.publishText(text_pose, "MoveGroupInterface Demo", rvt::WHITE, rvt::XLARGE);
 
   // (Optional) Create a publisher for visualizing plans in Rviz.
@@ -175,6 +175,25 @@ int main(int argc, char **argv)
   target_pose1.position.z += 0.2;
   target_pose1.position.y += 0.2;
   target_pose1.position.x -= 0.2;
+  waypoints.push_back(target_pose1);  // up and left
+  target_pose1.position.z -= 0.2;
+  target_pose1.position.y -= 0.2;
+  target_pose1.position.x -= 0.2;
+  waypoints.push_back(target_pose1);  // up and left
+  target_pose1.position.z += 0.2;
+  target_pose1.position.y += 0.2;
+  target_pose1.position.x -= 0.2;
+  waypoints.push_back(target_pose1);  // up and left
+  target_pose1.position.z += 0.2;
+  target_pose1.position.y -= 0.2;
+  target_pose1.position.x += 0.2;
+  waypoints.push_back(target_pose1);  // up and left
+  target_pose1.position.z -= 0.2;
+  target_pose1.position.y -= 0.2;
+  waypoints.push_back(target_pose1);  // up and left
+  target_pose1.position.y -= 0.2;
+  target_pose1.position.x -= 0.2;
+  target_pose1.position.z += 0.2;
   waypoints.push_back(target_pose1);  // up and left
   // ################################################################
   moveit_msgs::RobotTrajectory trajectory;
