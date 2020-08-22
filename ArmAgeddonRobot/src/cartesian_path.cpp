@@ -1,42 +1,8 @@
-/*********************************************************************
- * Software License Agreement (BSD License)
- *
- *  Copyright (c) 2013, SRI International
- *  All rights reserved.
- *  Copyright (c) 2017, Jonathan Cacace
- *  All rights reserved.
- *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions
- *  are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above
- *     copyright notice, this list of conditions and the following
- *     disclaimer in the documentation and/or other materials provided
- *     with the distribution.
- *   * Neither the name of SRI International nor the names of its
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- *  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- *  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- *  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- *  POSSIBILITY OF SUCH DAMAGE.
- *********************************************************************/
-
-/* Authors: Sachin Chitta
-						Jonathan Cacace
-*/
+//+-------------------------------------------------------------------------------+
+//             ╔══════════════════════════════════════════════════╗
+//             ║  Copyright (C) 2020 Paulo Victor Duarte          ║
+//             ╚══════════════════════════════════════════════════╝
+//+-------------------------------------------------------------------------------+
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
 
@@ -54,6 +20,8 @@
 
 int main(int argc, char **argv)
 {
+//+-------------------------------------------------------------------------------+
+  ROS_WARN("Iniciando Node");
   // iniciacao padrao para nodes
   ros::init(argc, argv, "move_group_interface_tutorial");
   ros::NodeHandle node_handle;
@@ -61,16 +29,17 @@ int main(int argc, char **argv)
   spinner.start();
   /* This sleep is ONLY to allow Rviz to come up */
   sleep(2.0);
-
+//+-------------------------------------------------------------------------------+
+  ROS_WARN("Iniciando PLANNING_GROUP");
   // nome do grupo que sera movimentado
   static const std::string PLANNING_GROUP = "robot_arm";
   // linhas padrao para criar um grupo a ser movimentado
   moveit::planning_interface::MoveGroupInterface group(PLANNING_GROUP);
   moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
   const robot_state::JointModelGroup* joint_model_group = group.getCurrentState()->getJointModelGroup(PLANNING_GROUP);
-
   // aqui inicia o programa de fato
-  ROS_INFO("INICIANDO PACOTES");
+//+-------------------------------------------------------------------------------+
+  ROS_WARN("Iniciando Visual_Tools");
   // The package MoveItVisualTools
   namespace rvt = rviz_visual_tools;
   moveit_visual_tools::MoveItVisualTools visual_tools("base_link");
@@ -80,15 +49,34 @@ int main(int argc, char **argv)
   // pacotes para a interface - text, cylinders, and spheres
   Eigen::Isometry3d text_pose = Eigen::Isometry3d::Identity();
   text_pose.translation().z() = 1.6;
-  visual_tools.publishText(text_pose, "MoveGroupInterface Demo", rvt::WHITE, rvt::XLARGE);
 
+  // Scales
+  // XXXXSMALL = 1, XXXSMALL = 2, XXSMALL = 3, XSMALL = 4,
+  // SMALL = 5, MEDIUM = 6, LARGE = 7, XLARGE = 8,
+  // XXLARGE = 9, XXXLARGE = 10, XXXXLARGE = 11
+
+  // Colors 
+  // BLACK 	 BROWN 	 BLUE 	 CYAN 	 GREY 	 DARK_GREY 	 
+  // GREEN 	 LIME_GREEN 	 MAGENTA 	 ORANGE 	 PURPLE 	 
+  // RED 	 PINK 	 WHITE 	 YELLOW 	 
+  // TRANSLUCENT 	 TRANSLUCENT_LIGHT 	 TRANSLUCENT_DARK 	 
+  // RAND 	 CLEAR 	 DEFAULT 
+
+  visual_tools.publishText(text_pose, "Iniciando Visual_Tools", rvt::WHITE, rvt::XLARGE);
   // (Optional) Create a publisher for visualizing plans in Rviz.
   ros::Publisher display_publisher = node_handle.advertise<moveit_msgs::DisplayTrajectory>("/move_group/display_planned_path", 1, true);
   moveit_msgs::DisplayTrajectory display_trajectory;
-
-  ROS_INFO("primeito movimento randomico");
-  //seta o movimento
+  visual_tools.trigger();
+//+-------------------------------------------------------------------------------+
+  // ROS_WARN("Movimento Randomico");
   // group.setRandomTarget();
+  // group.move();
+//+-------------------------------------------------------------------------------+
+  ROS_WARN("Movimento GoHome");
+  visual_tools.deleteAllMarkers();
+  visual_tools.publishText(text_pose, "Movimento GoHome", rvt::ORANGE, rvt::XXXLARGE);
+  visual_tools.trigger();
+
   moveit::core::RobotStatePtr current_state = group.getCurrentState();
   std::vector<double> joint_group_positions;
   current_state->copyJointGroupPositions(joint_model_group, joint_group_positions);
@@ -99,15 +87,18 @@ int main(int argc, char **argv)
   joint_group_positions[4] = 0.0;  // radians
   joint_group_positions[5] = 0.0;  // radians
   group.setJointValueTarget(joint_group_positions);
+  
   //move o objeto
   group.move();
   // Batch publishing is used to reduce the number of messages being sent to RViz for large visualizations
   visual_tools.trigger();
   // prompt trava o programa esperando o proximo passo
-  visual_tools.prompt("Press 'next' in the RvizVisualToolsGui window to continue");
-
-  ROS_INFO("Reference frame: %s", group.getPlanningFrame().c_str());
-  ROS_INFO("Reference frame: %s", group.getEndEffectorLink().c_str());
+  visual_tools.prompt("Presione 'next' no Rviz");
+//+-------------------------------------------------------------------------------+
+  ROS_WARN("Planejar PoseGoal");
+  visual_tools.deleteAllMarkers(); 
+  visual_tools.publishText(text_pose, "Planejar PoseGoal", rvt::ORANGE, rvt::XXXLARGE);
+  visual_tools.trigger();
 
   // Planning to a Pose goal
   geometry_msgs::Pose target_pose1;
@@ -125,19 +116,22 @@ int main(int argc, char **argv)
 	moveit::planning_interface::MoveItErrorCode success = group.plan(my_plan);
   ROS_INFO("Visualizing plan 1 (pose goal) %s",success.val ? "":"FAILED");
 
-
+  // mostra o movimento no visual_tools
   ROS_INFO_NAMED("tutorial", "Visualizing plan 1 as trajectory line");
   visual_tools.publishAxisLabeled(target_pose1, "pose1");
-  visual_tools.publishText(text_pose, "Pose Goal", rvt::WHITE, rvt::XLARGE);
   visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
   visual_tools.trigger();
   group.execute(my_plan);
-  visual_tools.prompt("iniciar movimento de juntas");
+  visual_tools.prompt("Presione 'next' no Rviz");
  
   // aqui move o robo de fato.
 	// group.move();
   // group.execute(my_plan);
-
+//+-------------------------------------------------------------------------------+
+  ROS_WARN("Planejar Movimento Por Junta");
+  visual_tools.deleteAllMarkers();
+  visual_tools.publishText(text_pose, "Planejar Movimento Por Junta", rvt::ORANGE, rvt::XXXLARGE);
+  visual_tools.trigger();
   // mover braco atraves das juntas
   current_state = group.getCurrentState();
   //copia o estdado das juntas para a nova variavel
@@ -145,25 +139,26 @@ int main(int argc, char **argv)
   // modifica o estado de uma das juntas
   joint_group_positions[0] = -1.0;  // radians
   group.setJointValueTarget(joint_group_positions);
-  //print das juntas
-  for (auto& valor : joint_group_positions)ROS_INFO("%f ",valor);
 
   success = (group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
   ROS_INFO_NAMED("tutorial", "Visualizing plan 2 (joint space goal) %s", success ? "" : "FAILED");
 
   // Visualize the plan in RViz
-  visual_tools.deleteAllMarkers();
   // visual_tools.publishAxisLabeled(target_pose1, "pose1");
-  visual_tools.publishText(text_pose, "Joint Space Goal", rvt::WHITE, rvt::XLARGE);
   visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
   visual_tools.trigger();
-  visual_tools.prompt("iniciar movimento");
-
-  group.execute(my_plan);
+  visual_tools.prompt("Presione 'next' no Rviz");
+//+-------------------------------------------------------------------------------+
+  ROS_WARN("Executa Movimento Por Junta");
+  visual_tools.publishText(text_pose, "Executa Movimento Por Junta", rvt::ORANGE, rvt::XXXLARGE);
   visual_tools.trigger();
+  group.execute(my_plan);
+  visual_tools.prompt("Presione 'next' no Rviz");
+//+-------------------------------------------------------------------------------+
+  ROS_WARN("Iniciar Plano Cartesiano");
   visual_tools.deleteAllMarkers();
-
-  visual_tools.prompt("iniciar plano cartesiano");
+  visual_tools.publishText(text_pose, "Iniciar Plano Cartesiano", rvt::ORANGE, rvt::XXXLARGE);
+  visual_tools.trigger();
   target_pose1=group.getCurrentPose().pose;
   std::vector<geometry_msgs::Pose> waypoints;
   
@@ -195,7 +190,7 @@ int main(int argc, char **argv)
   target_pose1.position.x -= 0.2;
   target_pose1.position.z += 0.2;
   waypoints.push_back(target_pose1);  // up and left
-  // ################################################################
+
   moveit_msgs::RobotTrajectory trajectory;
   const double jump_threshold = 0.0;
   const double eef_step = 0.01;
@@ -203,16 +198,19 @@ int main(int argc, char **argv)
   ROS_INFO_NAMED("tutorial", "Visualizing plan 4 (Cartesian path) (%.2f%% acheived)", fraction * 100.0);
 
   // Visualize the plan in RViz
-  visual_tools.deleteAllMarkers();
-  visual_tools.publishText(text_pose, "Cartesian Path", rvt::WHITE, rvt::XLARGE);
   visual_tools.publishPath(waypoints, rvt::LIME_GREEN, rvt::SMALL);
   for (std::size_t i = 0; i < waypoints.size(); ++i)
-  visual_tools.publishAxisLabeled(waypoints[i], "pt" + std::to_string(i), rvt::SMALL);
+  visual_tools.publishAxisLabeled(waypoints[i], "Point: " + std::to_string(i), rvt::SMALL);
+  visual_tools.trigger();
+  visual_tools.prompt("Presione 'next' no Rviz");
+//+-------------------------------------------------------------------------------+
+  ROS_WARN("Executa Plano Cartesiano");
+  // visual_tools.deleteAllMarkers();
+  visual_tools.publishText(text_pose, "Executa Plano Cartesiano", rvt::ORANGE, rvt::XXXLARGE);
   visual_tools.trigger();
   group.execute(trajectory);
-
-
-  visual_tools.prompt("fim");
+//+-------------------------------------------------------------------------------+
+  ROS_WARN("FIM");
   ros::shutdown();
 
  return 0;
