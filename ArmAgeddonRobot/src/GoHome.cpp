@@ -1,42 +1,8 @@
-/*********************************************************************
- * Software License Agreement (BSD License)
- *
- *  Copyright (c) 2013, SRI International
- *  All rights reserved.
- *  Copyright (c) 2017, Jonathan Cacace
- *  All rights reserved.
- *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions
- *  are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above
- *     copyright notice, this list of conditions and the following
- *     disclaimer in the documentation and/or other materials provided
- *     with the distribution.
- *   * Neither the name of SRI International nor the names of its
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- *  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- *  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- *  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- *  POSSIBILITY OF SUCH DAMAGE.
- *********************************************************************/
-
-/* Authors: Sachin Chitta
-						Jonathan Cacace
-*/
+//+-------------------------------------------------------------------------------+
+//             ╔══════════════════════════════════════════════════╗
+//             ║  Copyright (C) 2020 Paulo Victor Duarte          ║
+//             ╚══════════════════════════════════════════════════╝
+//+-------------------------------------------------------------------------------+
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
 
@@ -50,49 +16,74 @@
 
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2/LinearMath/Quaternion.h>
+
+#include <ros/console.h>
 using namespace std;
 
 int main(int argc, char **argv)
 {
+//+-------------------------------------------------------------------------------+
   // iniciacao padrao para nodes
-  ros::init(argc, argv, "move_group_interface_tutorial");
+  ros::init(argc, argv, "AppGoHome");
   ros::NodeHandle node_handle;
   ros::AsyncSpinner spinner(1);
   spinner.start();
   /* This sleep is ONLY to allow Rviz to come up */
   sleep(2.0);
-
+//+-------------------------------------------------------------------------------+
   // nome do grupo que sera movimentado
   static const std::string PLANNING_GROUP = "robot_arm";
   // linhas padrao para criar um grupo a ser movimentado
   moveit::planning_interface::MoveGroupInterface group(PLANNING_GROUP);
   moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
   const robot_state::JointModelGroup* joint_model_group = group.getCurrentState()->getJointModelGroup(PLANNING_GROUP);
-
   // aqui inicia o programa de fato
-  ROS_INFO("INICIANDO PACOTES");
-  // The package MoveItVisualTools
-  namespace rvt = rviz_visual_tools;
-  moveit_visual_tools::MoveItVisualTools visual_tools("base_link");
-  visual_tools.deleteAllMarkers();
-  // inicia o controle por botoes
-  visual_tools.loadRemoteControl();
-  // pacotes para a interface - text, cylinders, and spheres
-  Eigen::Isometry3d text_pose = Eigen::Isometry3d::Identity();
-  text_pose.translation().z() = 1.6;
-  visual_tools.publishText(text_pose, "MoveGroupInterface Demo", rvt::WHITE, rvt::XLARGE);
+//+-------------------------------------------------------------------------------+
+  // PARA VER AS MENSAGENS PUBLICADAS EM ROS_INFO
+  // rostopic type /rosout | rosmsg show
+  // rostopic echo /rosout/msg
+  // rqt_console
+//+-------------------------------------------------------------------------------+
+  // TIPOS DE MENSAGENS
+  // https://wiki.ros.org/rosconsole
+  ROS_WARN("TIPOS DE MENSAGENS");
+  ROS_INFO("MSG INFO");
+  ROS_WARN("MSG WARN");
+  ROS_ERROR("MSG ERROR");
+  ROS_FATAL("MSG FATAL");
+//+-------------------------------------------------------------------------------+
+  ROS_WARN("Reference Frame");
+  ROS_INFO("PlanningFrame: %s", group.getPlanningFrame().c_str());
+  ROS_WARN("Name of the end-effector");
+  ROS_INFO("EndEffectorLink: %s", group.getEndEffectorLink().c_str());
+  
+  std::vector<std::string> nomes;
+  int indice;
 
-  // (Optional) Create a publisher for visualizing plans in Rviz.
-  ros::Publisher display_publisher = node_handle.advertise<moveit_msgs::DisplayTrajectory>("/move_group/display_planned_path", 1, true);
-  moveit_msgs::DisplayTrajectory display_trajectory;
+  ROS_WARN("Lista dos Grupos");
+  indice=1;
+  nomes = group.getJointModelGroupNames();
+  // for (auto &valor : nomes) ROS_INFO("JointName: %s ", valor.c_str());
+  for (auto &valor : nomes)ROS_INFO_STREAM("GroupName(" << indice++ << "): " << valor);
+  
+  ROS_WARN("Lista das Juntas");
+  indice=1;
+  nomes = group.getJointNames();
+  // for (auto &valor : nomes) ROS_INFO("JointName: %s ", valor.c_str());
+  for (auto &valor : nomes)ROS_INFO_STREAM("JointName(" << indice++ << "): " << valor);
 
-  ROS_INFO("Movimento para HOME");
+  
+  ROS_WARN("Lista dos elos");
+  indice=1;
+  nomes = group.getLinkNames();
+  // for (auto &valor : nomes) ROS_INFO("LinkName: %s ", valor.c_str());
+  for (auto &valor : nomes)ROS_INFO_STREAM("LinkName(" << indice++ << "): " << valor);
+
+//+-------------------------------------------------------------------------------+
   //seta o movimento
-  // group.setRandomTarget();
   moveit::core::RobotStatePtr current_state = group.getCurrentState();
   std::vector<double> joint_group_positions;
   current_state->copyJointGroupPositions(joint_model_group, joint_group_positions);
-  cout << "quantidade de juntas: " << joint_group_positions.size() << endl;
   joint_group_positions[0] = 0.0;  // radians
   joint_group_positions[1] = 0.0;  // radians
   joint_group_positions[2] = 0.0;  // radians
@@ -100,18 +91,15 @@ int main(int argc, char **argv)
   joint_group_positions[4] = 0.0;  // radians
   joint_group_positions[5] = 0.0;  // radians
   group.setJointValueTarget(joint_group_positions);
-  ROS_INFO("GetPlanningFrame: %s", group.getPlanningFrame().c_str());
-  ROS_INFO("GetEndEffectorLink: %s", group.getEndEffectorLink().c_str());
-  std::vector<std::string> nomes;
-  nomes = group.getJointNames();
-  for (auto &valor : nomes) ROS_INFO("JointNames: %s ", valor.c_str());
-  nomes = group.getLinkNames();
-  for (auto &valor : nomes) ROS_INFO("Links: %s ", valor.c_str());
   //move o objeto
+  ROS_WARN("INICIANDO GOHOME");
   group.move();
-  // Batch publishing is used to reduce the number of messages being sent to RViz for large visualizations
-  visual_tools.trigger();
-
+  indice=1;
+  ROS_WARN("Lista das Juntas");
+  // for (auto& valor : joint_group_positions)ROS_INFO("%f ",valor);
+  for (auto &valor : joint_group_positions)ROS_INFO_STREAM("Joint(" << indice++ << "): " << valor);
+//+-------------------------------------------------------------------------------+
+  ROS_WARN("FIM");
   ros::shutdown();
 
  return 0;
