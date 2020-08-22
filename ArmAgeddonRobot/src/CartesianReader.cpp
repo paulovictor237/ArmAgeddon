@@ -3,6 +3,7 @@
 //             ║  Copyright (C) 2020 Paulo Victor Duarte          ║
 //             ╚══════════════════════════════════════════════════╝
 //+-------------------------------------------------------------------------------+
+// BIBLIOTECAS ROS
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
 
@@ -17,6 +18,55 @@
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2/LinearMath/Quaternion.h>
 
+// BIBLIOTECAS C++
+#include <iostream>
+#include <fstream>
+#include <iomanip>      // std::setprecision & std::setw
+#include <algorithm>    // std::count
+#include <math.h>       // M_PI
+using namespace std;
+
+void outputLine( double x,double y,double z,double rx,double ry,double rz )
+{
+  cout << std::fixed << std::setprecision(2);
+  cout << "FileLine>> "
+       << "x: "  << x << setw( 8 ) 
+       << "y: "  << y << setw( 8 )
+       << "z: "  << z << setw( 8 )
+       << "rx: " << rx << setw( 8 ) 
+       << "ry: " << ry << setw( 8 )
+       << "rz: " << rz  
+       << endl;
+  return;
+}
+
+
+void ExtractPoints(std::ifstream &inClientFile ,std::vector<geometry_msgs::Pose> &waypoints){
+  geometry_msgs::Pose target_pose;
+  tf2::Quaternion rpy2quaternion;
+
+  double x,y,z,rx,ry,rz;
+  string descartar;
+  while (!inClientFile.eof()){
+    inClientFile >> descartar >> x ;
+    inClientFile >> descartar >> y ;
+    inClientFile >> descartar >> z ;
+    inClientFile >> descartar >> rx;
+    inClientFile >> descartar >> ry;
+    inClientFile >> descartar >> rz;
+    outputLine(x,y,z,rx,ry,rz);
+
+    rpy2quaternion.setRPY(rx,ry,rz);
+    rpy2quaternion.normalize();
+    target_pose.orientation = tf2::toMsg(rpy2quaternion);
+    target_pose.position.x = x;
+    target_pose.position.y = y;
+    target_pose.position.z = z;
+    waypoints.push_back(target_pose);
+  }
+  return;
+}
+
 
 int main(int argc, char **argv)
 {
@@ -29,6 +79,31 @@ int main(int argc, char **argv)
   spinner.start();
   /* This sleep is ONLY to allow Rviz to come up */
   sleep(2.0);
+//+-------------------------------------------------------------------------------+
+  // Obter o endereco relativo do pacote ArmAgeddonRobot
+  string RelativePath=ros::package::getPath("ArmAgeddonRobot");
+  cout << "Caminho Relativo: " << RelativePath << endl;
+//+-------------------------------------------------------------------------------+
+  // Informar o numero de linhas do arquivo 
+  std::ifstream inFile(RelativePath + "/arquivos/positions.txt"); 
+  if(!inFile) {
+    cout << "Arquivo não foi encontrado.\n";
+    ros::shutdown();
+    return 0;
+  }
+  cout << "Numero de linhas do arquivo: " << std::count(std::istreambuf_iterator<char>(inFile),std::istreambuf_iterator<char>(), '\n')+1 << endl;
+  inFile.close();
+//+-------------------------------------------------------------------------------+
+  // ler o arquivo 
+  ifstream inClientFile(RelativePath + "/arquivos/positions.txt");
+  
+  std::vector<geometry_msgs::Pose> waypoints;
+
+  ExtractPoints(inClientFile,waypoints);
+  
+  inClientFile.close();
+
+  // for (auto &valor : waypoints)cout << valor;
 //+-------------------------------------------------------------------------------+
   ROS_WARN("Iniciando PLANNING_GROUP");
   // nome do grupo que sera movimentado
@@ -68,128 +143,10 @@ int main(int argc, char **argv)
   moveit_msgs::DisplayTrajectory display_trajectory;
   visual_tools.trigger();
 //+-------------------------------------------------------------------------------+
-  // ROS_WARN("Movimento Randomico");
-  // group.setRandomTarget();
-  // group.move();
-//+-------------------------------------------------------------------------------+
-  ROS_WARN("Movimento GoHome");
-  visual_tools.deleteAllMarkers();
-  visual_tools.publishText(text_pose, "Movimento GoHome", rvt::ORANGE, rvt::XXXLARGE);
-  visual_tools.trigger();
-
-  moveit::core::RobotStatePtr current_state = group.getCurrentState();
-  std::vector<double> joint_group_positions;
-  current_state->copyJointGroupPositions(joint_model_group, joint_group_positions);
-  joint_group_positions[0] = 0.0;  // radians
-  joint_group_positions[1] = 0.0;  // radians
-  joint_group_positions[2] = 0.0;  // radians
-  joint_group_positions[3] = 0.0;  // radians
-  joint_group_positions[4] = 0.0;  // radians
-  joint_group_positions[5] = 0.0;  // radians
-  group.setJointValueTarget(joint_group_positions);
-  
-  //move o objeto
-  group.move();
-  // Batch publishing is used to reduce the number of messages being sent to RViz for large visualizations
-  visual_tools.trigger();
-  // prompt trava o programa esperando o proximo passo
-  visual_tools.prompt("Presione 'next' no Rviz");
-//+-------------------------------------------------------------------------------+
-  ROS_WARN("Planejar PoseGoal");
-  visual_tools.deleteAllMarkers(); 
-  visual_tools.publishText(text_pose, "Planejar PoseGoal", rvt::ORANGE, rvt::XXXLARGE);
-  visual_tools.trigger();
-
-  // Planning to a Pose goal
-  geometry_msgs::Pose target_pose1;
-  tf2::Quaternion myQuaternion;
-  myQuaternion.setRPY(3.14159, 0, 3.14159); // Create this quaternion from roll/pitch/yaw (in radians)
-  myQuaternion.normalize();
-  target_pose1.orientation = tf2::toMsg(myQuaternion);
-  target_pose1.position.x = 0.6836502253486568;
-  target_pose1.position.y = 0.6836502253486568;
-  target_pose1.position.z = 0.5369882852527241;
-  group.setPoseTarget(target_pose1);
-
-  // planeja o movimento mas ainda nao executa
-	moveit::planning_interface::MoveGroupInterface::Plan my_plan;
-	moveit::planning_interface::MoveItErrorCode success = group.plan(my_plan);
-  ROS_INFO("Visualizing plan 1 (pose goal) %s",success.val ? "":"FAILED");
-
-  // mostra o movimento no visual_tools
-  ROS_INFO_NAMED("tutorial", "Visualizing plan 1 as trajectory line");
-  visual_tools.publishAxisLabeled(target_pose1, "pose1");
-  visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
-  visual_tools.trigger();
-  group.execute(my_plan);
-  visual_tools.prompt("Presione 'next' no Rviz");
- 
-  // aqui move o robo de fato.
-	// group.move();
-  // group.execute(my_plan);
-//+-------------------------------------------------------------------------------+
-  ROS_WARN("Planejar Movimento Por Junta");
-  visual_tools.deleteAllMarkers();
-  visual_tools.publishText(text_pose, "Planejar Movimento Por Junta", rvt::ORANGE, rvt::XXXLARGE);
-  visual_tools.trigger();
-  // mover braco atraves das juntas
-  current_state = group.getCurrentState();
-  //copia o estdado das juntas para a nova variavel
-  current_state->copyJointGroupPositions(joint_model_group, joint_group_positions);
-  // modifica o estado de uma das juntas
-  joint_group_positions[0] = -1.0;  // radians
-  group.setJointValueTarget(joint_group_positions);
-
-  success = (group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
-  ROS_INFO_NAMED("tutorial", "Visualizing plan 2 (joint space goal) %s", success ? "" : "FAILED");
-
-  // Visualize the plan in RViz
-  // visual_tools.publishAxisLabeled(target_pose1, "pose1");
-  visual_tools.publishTrajectoryLine(my_plan.trajectory_, joint_model_group);
-  visual_tools.trigger();
-  visual_tools.prompt("Presione 'next' no Rviz");
-//+-------------------------------------------------------------------------------+
-  ROS_WARN("Executa Movimento Por Junta");
-  visual_tools.publishText(text_pose, "Executa Movimento Por Junta", rvt::ORANGE, rvt::XXXLARGE);
-  visual_tools.trigger();
-  group.execute(my_plan);
-  visual_tools.prompt("Presione 'next' no Rviz");
-//+-------------------------------------------------------------------------------+
   ROS_WARN("Iniciar Plano Cartesiano");
   visual_tools.deleteAllMarkers();
   visual_tools.publishText(text_pose, "Iniciar Plano Cartesiano", rvt::ORANGE, rvt::XXXLARGE);
   visual_tools.trigger();
-  target_pose1=group.getCurrentPose().pose;
-  std::vector<geometry_msgs::Pose> waypoints;
-  
-  waypoints.push_back(target_pose1);
-  target_pose1.position.z -= 0.2;
-  waypoints.push_back(target_pose1);  // down
-  target_pose1.position.y -= 0.2;
-  waypoints.push_back(target_pose1);  // right
-  target_pose1.position.z += 0.2;
-  target_pose1.position.y += 0.2;
-  target_pose1.position.x -= 0.2;
-  waypoints.push_back(target_pose1);  // up and left
-  target_pose1.position.z -= 0.2;
-  target_pose1.position.y -= 0.2;
-  target_pose1.position.x -= 0.2;
-  waypoints.push_back(target_pose1);  // up and left
-  target_pose1.position.z += 0.2;
-  target_pose1.position.y += 0.2;
-  target_pose1.position.x -= 0.2;
-  waypoints.push_back(target_pose1);  // up and left
-  target_pose1.position.z += 0.2;
-  target_pose1.position.y -= 0.2;
-  target_pose1.position.x += 0.2;
-  waypoints.push_back(target_pose1);  // up and left
-  target_pose1.position.z -= 0.2;
-  target_pose1.position.y -= 0.2;
-  waypoints.push_back(target_pose1);  // up and left
-  target_pose1.position.y -= 0.2;
-  target_pose1.position.x -= 0.2;
-  target_pose1.position.z += 0.2;
-  waypoints.push_back(target_pose1);  // up and left
 
   moveit_msgs::RobotTrajectory trajectory;
   const double jump_threshold = 0.0;

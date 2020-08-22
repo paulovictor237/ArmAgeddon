@@ -1,6 +1,0 @@
-<launch>
-
-  <node name="CartesianPath" pkg="ArmAgeddonRobot" type="CartesianPath" respawn="false" output="screen">
-  </node>
-
-</launch>

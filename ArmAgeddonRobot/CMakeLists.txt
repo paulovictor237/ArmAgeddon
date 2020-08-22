@@ -80,9 +80,9 @@ target_link_libraries(GoRandom ${catkin_LIBRARIES})
 install(TARGETS GoRandom DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Declare a cpp executable
-add_executable(CartesianPath src/CartesianPath.cpp)
-target_link_libraries(CartesianPath ${catkin_LIBRARIES})
-install(TARGETS CartesianPath DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+add_executable(TypeMoves src/TypeMoves.cpp)
+target_link_libraries(TypeMoves ${catkin_LIBRARIES})
+install(TARGETS TypeMoves DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Declare a cpp executable
 add_executable(CartesianReader src/CartesianReader.cpp)

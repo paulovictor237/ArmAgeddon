@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="CartesianReader" pkg="ArmAgeddonRobot" type="CartesianReader" respawn="false" output="screen">
+  </node>
+
+</launch>
