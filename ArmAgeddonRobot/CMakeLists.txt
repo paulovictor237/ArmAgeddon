@@ -64,15 +64,10 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_
 # ... ## Testing ## ...
 #===========================================================================
 
-# ... listener ...
-add_executable(listener src/listener.cpp)
-target_link_libraries(listener ${catkin_LIBRARIES})
-install(TARGETS listener DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
-# ... listener ...
-add_executable(listener2 src/listener2.cpp)
-target_link_libraries(listener2 ${catkin_LIBRARIES})
-install(TARGETS listener2 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+## Declare a cpp executable
+add_executable(Reader src/Reader.cpp)
+target_link_libraries(Reader ${catkin_LIBRARIES})
+install(TARGETS Reader DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Declare a cpp executable
 add_executable(GoHome src/GoHome.cpp)
