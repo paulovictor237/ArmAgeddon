@@ -63,17 +63,6 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_
 #===========================================================================
 # ... ## Testing ## ...
 #===========================================================================
-# ... moveit_tutorials/doc/move_group_python_interface ...
-install(PROGRAMS
-  scripts/move_group_python_interface_tutorial.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-# ... moveit_tutorials/doc/move_group_interface ...
-add_executable(move_group_interface_tutorial src/move_group_interface_tutorial.cpp)
-target_link_libraries(move_group_interface_tutorial ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-install(TARGETS move_group_interface_tutorial DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
 
 # ... listener ...
 add_executable(listener src/listener.cpp)
@@ -81,29 +70,16 @@ target_link_libraries(listener ${catkin_LIBRARIES})
 install(TARGETS listener DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Declare a cpp executable
-add_executable(test_custom_node_2 src/test_custom2.cpp)
-target_link_libraries(test_custom_node_2 ${catkin_LIBRARIES})
-install(TARGETS test_custom_node_2 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
-## Declare a cpp executable
 add_executable(GoHome src/GoHome.cpp)
 target_link_libraries(GoHome ${catkin_LIBRARIES})
 install(TARGETS GoHome DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Declare a cpp executable
-add_executable(DOF5_custom1 src/DOF5_custom1.cpp)
-target_link_libraries(DOF5_custom1 ${catkin_LIBRARIES})
-install(TARGETS DOF5_custom1 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-## Declare a cpp executable
-add_executable(DOF5_custom2 src/DOF5_custom2.cpp)
-target_link_libraries(DOF5_custom2 ${catkin_LIBRARIES})
-install(TARGETS DOF5_custom2 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-## Declare a cpp executable
-add_executable(DOF5_random src/DOF5_random.cpp)
-target_link_libraries(DOF5_random ${catkin_LIBRARIES})
-install(TARGETS DOF5_random DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+add_executable(GoRandom src/GoRandom.cpp)
+target_link_libraries(GoRandom ${catkin_LIBRARIES})
+install(TARGETS GoRandom DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Declare a cpp executable
-add_executable(cartesian_path src/cartesian_path.cpp)
-target_link_libraries(cartesian_path ${catkin_LIBRARIES})
-install(TARGETS cartesian_path DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+add_executable(CartesianPath src/CartesianPath.cpp)
+target_link_libraries(CartesianPath ${catkin_LIBRARIES})
+install(TARGETS CartesianPath DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

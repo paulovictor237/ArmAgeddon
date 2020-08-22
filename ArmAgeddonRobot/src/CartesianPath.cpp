@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 //+-------------------------------------------------------------------------------+
   ROS_WARN("Iniciando Node");
   // iniciacao padrao para nodes
-  ros::init(argc, argv, "move_group_interface_tutorial");
+  ros::init(argc, argv, "CartesianPath");
   ros::NodeHandle node_handle;
   ros::AsyncSpinner spinner(1);
   spinner.start();
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
   visual_tools.loadRemoteControl();
   // pacotes para a interface - text, cylinders, and spheres
   Eigen::Isometry3d text_pose = Eigen::Isometry3d::Identity();
-  text_pose.translation().z() = 1.6;
+  text_pose.translation().z() = 1.7;
 
   // Scales
   // XXXXSMALL = 1, XXXSMALL = 2, XXSMALL = 3, XSMALL = 4,

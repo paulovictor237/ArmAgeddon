@@ -1,3 +1,8 @@
+//+-------------------------------------------------------------------------------+
+//             ╔══════════════════════════════════════════════════╗
+//             ║  Copyright (C) 2020 Paulo Victor Duarte          ║
+//             ╚══════════════════════════════════════════════════╝
+//+-------------------------------------------------------------------------------+
 #include <ros/package.h>
 #include <iostream>
 #include <fstream>
@@ -29,9 +34,9 @@ int main()
     string RelativePath=ros::package::getPath("ArmAgeddonRobot");
     cout << RelativePath << endl;
 
-    ifstream inClientFile(RelativePath + "/src/test.txt");
+    ifstream inClientFile(RelativePath + "/arquivos/test.txt");
 
-    std::ifstream inFile(RelativePath + "/src/test.txt"); 
+    std::ifstream inFile(RelativePath + "/arquivos/test.txt"); 
     cout << "Numero de linhas: " << std::count(std::istreambuf_iterator<char>(inFile),std::istreambuf_iterator<char>(), '\n')+1 << endl;
     inFile.close();
 
