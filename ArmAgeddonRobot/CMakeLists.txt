@@ -69,6 +69,11 @@ add_executable(listener src/listener.cpp)
 target_link_libraries(listener ${catkin_LIBRARIES})
 install(TARGETS listener DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+# ... listener ...
+add_executable(listener2 src/listener2.cpp)
+target_link_libraries(listener2 ${catkin_LIBRARIES})
+install(TARGETS listener2 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 ## Declare a cpp executable
 add_executable(GoHome src/GoHome.cpp)
 target_link_libraries(GoHome ${catkin_LIBRARIES})
@@ -83,3 +88,8 @@ install(TARGETS GoRandom DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 add_executable(CartesianPath src/CartesianPath.cpp)
 target_link_libraries(CartesianPath ${catkin_LIBRARIES})
 install(TARGETS CartesianPath DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+## Declare a cpp executable
+add_executable(CartesianReader src/CartesianReader.cpp)
+target_link_libraries(CartesianReader ${catkin_LIBRARIES})
+install(TARGETS CartesianReader DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
