@@ -63,13 +63,28 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_
 #===========================================================================
 # ... ## Testing ## ...
 #===========================================================================
-# ... moveit_tutorials/doc/move_group_python_interface ...
-install(PROGRAMS
-  scripts/move_group_python_interface_tutorial.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
 
-# ... moveit_tutorials/doc/move_group_interface ...
-add_executable(move_group_interface_tutorial src/move_group_interface_tutorial.cpp)
-target_link_libraries(move_group_interface_tutorial ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-install(TARGETS move_group_interface_tutorial DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+## Declare a cpp executable
+add_executable(Reader src/Reader.cpp)
+target_link_libraries(Reader ${catkin_LIBRARIES})
+install(TARGETS Reader DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+## Declare a cpp executable
+add_executable(GoHome src/GoHome.cpp)
+target_link_libraries(GoHome ${catkin_LIBRARIES})
+install(TARGETS GoHome DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+## Declare a cpp executable
+add_executable(GoRandom src/GoRandom.cpp)
+target_link_libraries(GoRandom ${catkin_LIBRARIES})
+install(TARGETS GoRandom DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+## Declare a cpp executable
+add_executable(TypeMoves src/TypeMoves.cpp)
+target_link_libraries(TypeMoves ${catkin_LIBRARIES})
+install(TARGETS TypeMoves DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+## Declare a cpp executable
+add_executable(CartesianReader src/CartesianReader.cpp)
+target_link_libraries(CartesianReader ${catkin_LIBRARIES})
+install(TARGETS CartesianReader DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
