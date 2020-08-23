@@ -54,7 +54,7 @@ void ExtractPoints(std::ifstream &inClientFile ,std::vector<geometry_msgs::Pose>
     inClientFile >> descartar >> rx;
     inClientFile >> descartar >> ry;
     inClientFile >> descartar >> rz;
-    outputLine(x,y,z,rx,ry,rz);
+    // outputLine(x,y,z,rx,ry,rz);
 
     rpy2quaternion.setRPY(rx,ry,rz);
     rpy2quaternion.normalize();
@@ -149,12 +149,33 @@ int main(int argc, char **argv)
   visual_tools.trigger();
 
   waypoints.insert(waypoints.begin(),group.getCurrentPose().pose);
-
-  moveit_msgs::RobotTrajectory trajectory;
-  const double jump_threshold = 0.0;
+  // ===================== configuracoes =====================
+  // Velocidade e Aceleração máxima
+  // Para realizar caminhos cartesianos é recomendado usar 5% (0.05)
+  // O valor padrão é 10% (0.10)
+  // Defina seu valor padrão no arquivo joint_limits.yaml 
+  group.setMaxVelocityScalingFactor(0.05); 
+  group.setMaxAccelerationScalingFactor(0.05);
+  // O planejamento com restrições pode ser lento porque cada amostra deve
+  // chamar um solucionador de cinemática inversa. 
+  // O valor padrão é 5 segundos 
+  // É comum aumentar esse tempo quando se está calculando uma trajetória de multiplos pontos
+  // Para garantir que o planejador tenha tempo suficiente para ter sucesso aumente para 10s
+  group.setPlanningTime(10.0);
+  // eef_step tamanho de passo máximo em metros entre o efetor final e os pontos da trajetória
   const double eef_step = 0.01;
-  double fraction = group.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
-  ROS_INFO_NAMED("tutorial", "Visualizing plan 4 (Cartesian path) (%.2f%% acheived)", fraction * 100.0);
+  // Jump_threshold  - desativa-lo pode evitar pulos no calculo da cinematica inversa
+  const double jump_threshold = 0.0;
+  // avoid_collisions - colisões são evitadas se for definido como true.
+  // Entretanto, se as colisões não podem ser evitadas, a função falha. 
+  bool avoid_collisions=true;
+  // =========================================================
+  moveit_msgs::RobotTrajectory trajectory;
+  // Cartesian path funciona como consecutivos pontos da funcao setPoseReferenceFrame()
+  // Retorne um valor entre 0.0 e 1.0 indicando a fração do caminho alcançado
+  // Retorne -1,0 em caso de erro. 
+  double fraction = group.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory,avoid_collisions);
+  ROS_INFO("fracao do caminho alcancado: (%.2f%%)", fraction * 100.0);
 
   // Visualize the plan in RViz
   visual_tools.publishPath(waypoints, rvt::LIME_GREEN, rvt::SMALL);
