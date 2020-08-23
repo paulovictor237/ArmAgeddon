@@ -26,21 +26,6 @@
 #include <math.h>       // M_PI
 using namespace std;
 
-void outputLine( double x,double y,double z,double rx,double ry,double rz )
-{
-  cout << std::fixed << std::setprecision(2);
-  cout << "FileLine>> "
-       << "x: "  << x << setw( 8 ) 
-       << "y: "  << y << setw( 8 )
-       << "z: "  << z << setw( 8 )
-       << "rx: " << rx << setw( 8 ) 
-       << "ry: " << ry << setw( 8 )
-       << "rz: " << rz  
-       << endl;
-  return;
-}
-
-
 void ExtractPoints(std::ifstream &inClientFile ,std::vector<geometry_msgs::Pose> &waypoints){
   geometry_msgs::Pose target_pose;
   tf2::Quaternion rpy2quaternion;
@@ -94,9 +79,37 @@ int main(int argc, char **argv)
   cout << "Numero de linhas do arquivo: " << std::count(std::istreambuf_iterator<char>(inFile),std::istreambuf_iterator<char>(), '\n')+1 << endl;
   inFile.close();
 //+-------------------------------------------------------------------------------+
-  // ler o arquivo 
+  // abre o arquivo 
   ifstream inClientFile(RelativePath + "/arquivos/positions.txt");
+//+-------------------------------------------------------------------------------+
+  // faz a leitura do cabecalho  
+  double MaxVelocity;
+  double MaxAcceleration;
+  double PlanningTime ;
+  double EndEffectorStep;
+  double JumpThreshold;
+  bool   AvoidCollisions;
   
+  string descartar;
+  inClientFile >> descartar;
+  inClientFile >> descartar >> MaxVelocity;
+  inClientFile >> descartar >> MaxAcceleration;
+  inClientFile >> descartar >> PlanningTime;
+  inClientFile >> descartar >> EndEffectorStep;
+  inClientFile >> descartar >> JumpThreshold;
+  inClientFile >> descartar >> AvoidCollisions;
+  inClientFile >> descartar;
+  
+  cout << descartar << endl;
+  cout << "MaxVelocity: " << MaxVelocity << endl;
+  cout << "MaxAcceleration: " << MaxAcceleration << endl;
+  cout << "PlanningTime: " << PlanningTime << endl;
+  cout << "EndEffectorStep: " << EndEffectorStep << endl;
+  cout << "JumpThreshold: " << JumpThreshold << endl;
+  cout << "AvoidCollisions: " << AvoidCollisions << endl;
+  cout << descartar << endl;
+//+-------------------------------------------------------------------------------+
+  // faz a leitura dos waypoints
   std::vector<geometry_msgs::Pose> waypoints;
 
   ExtractPoints(inClientFile,waypoints);
@@ -154,21 +167,21 @@ int main(int argc, char **argv)
   // Para realizar caminhos cartesianos é recomendado usar 5% (0.05)
   // O valor padrão é 10% (0.10)
   // Defina seu valor padrão no arquivo joint_limits.yaml 
-  group.setMaxVelocityScalingFactor(0.05); 
-  group.setMaxAccelerationScalingFactor(0.05);
+  group.setMaxVelocityScalingFactor(MaxVelocity); 
+  group.setMaxAccelerationScalingFactor(MaxAcceleration);
   // O planejamento com restrições pode ser lento porque cada amostra deve
   // chamar um solucionador de cinemática inversa. 
   // O valor padrão é 5 segundos 
   // É comum aumentar esse tempo quando se está calculando uma trajetória de multiplos pontos
   // Para garantir que o planejador tenha tempo suficiente para ter sucesso aumente para 10s
-  group.setPlanningTime(10.0);
+  group.setPlanningTime(PlanningTime);
   // eef_step tamanho de passo máximo em metros entre o efetor final e os pontos da trajetória
-  const double eef_step = 0.01;
+  const double eef_step = EndEffectorStep;
   // Jump_threshold  - desativa-lo pode evitar pulos no calculo da cinematica inversa
-  const double jump_threshold = 0.0;
+  const double jump_threshold = JumpThreshold;
   // avoid_collisions - colisões são evitadas se for definido como true.
   // Entretanto, se as colisões não podem ser evitadas, a função falha. 
-  bool avoid_collisions=true;
+  bool avoid_collisions=AvoidCollisions;
   // =========================================================
   moveit_msgs::RobotTrajectory trajectory;
   // Cartesian path funciona como consecutivos pontos da funcao setPoseReferenceFrame()
