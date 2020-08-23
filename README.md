@@ -6,8 +6,8 @@ O valor padrão é 10% (0.10)
 Defina seu valor padrão no arquivo joint_limits.yaml 
 
 ```c++
-group.setMaxVelocityScalingFactor(0.05); 
-group.setMaxAccelerationScalingFactor(0.05);
+double MaxAcceleration = 0.05;
+double MaxVelocity = 0.05;
 ```
 ## Planning Time
 
@@ -17,27 +17,27 @@ O valor padrão é 5 segundos
 Para garantir que o planejador tenha tempo suficiente para ter sucesso aumente para 10s
 
 ```c++
-group.setPlanningTime(10.0);
+double PlanningTime = 10.0 ;
 ```
 ## End Effector Step
 
-eef_step tamanho de passo máximo em metros entre o efetor final e os pontos da trajetória
+Tamanho do passo máximo em metros entre o efetor final e os pontos da trajetória
 
 ```c++
-  const double eef_step = 0.01;
+double EndEffectorStep = 0.01;
 ```
 ## Jump Threshold
 
-Jump_threshold  - desativa-lo pode evitar pulos no calculo da cinematica inversa
+Desativa-lo pode evitar pulos no calculo da cinematica inversa
 
 ```c++
-  const double jump_threshold = 0.0;
+double JumpThreshold = 0.0;
 ```
 ## Avoid Collisions
 
-avoid_collisions - colisões são evitadas se for definido como true.
+Colisões são evitadas se for definido como true.
 Entretanto, se as colisões não podem ser evitadas, a função falha. 
 
 ```c++
-  bool avoid_collisions=true;
+bool   AvoidCollisions = 1;
 ```

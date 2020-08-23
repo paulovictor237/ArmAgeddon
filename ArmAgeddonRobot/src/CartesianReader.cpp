@@ -100,14 +100,14 @@ int main(int argc, char **argv)
   inClientFile >> descartar >> AvoidCollisions;
   inClientFile >> descartar;
   
-  cout << descartar << endl;
+  // cout << descartar << endl;
   cout << "MaxVelocity: " << MaxVelocity << endl;
   cout << "MaxAcceleration: " << MaxAcceleration << endl;
   cout << "PlanningTime: " << PlanningTime << endl;
   cout << "EndEffectorStep: " << EndEffectorStep << endl;
   cout << "JumpThreshold: " << JumpThreshold << endl;
   cout << "AvoidCollisions: " << AvoidCollisions << endl;
-  cout << descartar << endl;
+  // cout << descartar << endl;
 //+-------------------------------------------------------------------------------+
   // faz a leitura dos waypoints
   std::vector<geometry_msgs::Pose> waypoints;
