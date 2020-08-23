@@ -148,6 +148,8 @@ int main(int argc, char **argv)
   visual_tools.publishText(text_pose, "Iniciar Plano Cartesiano", rvt::ORANGE, rvt::XXXLARGE);
   visual_tools.trigger();
 
+  waypoints.insert(waypoints.begin(),group.getCurrentPose().pose);
+
   moveit_msgs::RobotTrajectory trajectory;
   const double jump_threshold = 0.0;
   const double eef_step = 0.01;
