@@ -1,7 +1,0 @@
-<launch>
-
-  <node name="Reader" pkg="ArmAgeddonRobot" type="Reader" respawn="false" output="screen">
-  </node>
-  
-</launch>
-

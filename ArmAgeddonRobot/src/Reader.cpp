@@ -31,14 +31,13 @@ using namespace std;
 void outputLine( double x,double y,double z,double rx,double ry,double rz )
 {
   cout << std::fixed << std::setprecision(2);
-  cout << "FileLine>> "
-       << "x: "  << x << setw( 8 ) 
-       << "y: "  << y << setw( 8 )
-       << "z: "  << z << setw( 8 )
-       << "rx: " << rx << setw( 8 ) 
-       << "ry: " << ry << setw( 8 )
-       << "rz: " << rz  
-       << endl;
+  cout << "FileLine>> ";
+  cout << "x: "  << x  << setw( 8 );
+  cout << "y: "  << y  << setw( 8 );
+  cout << "z: "  << z  << setw( 8 );
+  cout << "rx: " << rx << setw( 8 ); 
+  cout << "ry: " << ry << setw( 8 );
+  cout << "rz: " << rz << endl;
   return;
 }
 
@@ -72,15 +71,6 @@ void ExtractPoints(std::ifstream &inClientFile ,std::vector<geometry_msgs::Pose>
 int main(int argc, char **argv)
 {
 //+-------------------------------------------------------------------------------+
-  ROS_WARN("Iniciando Node");
-  // iniciacao padrao para nodes
-  ros::init(argc, argv, "Reader");
-  ros::NodeHandle node_handle;
-  ros::AsyncSpinner spinner(1);
-  spinner.start();
-  /* This sleep is ONLY to allow Rviz to come up */
-  sleep(2.0);
-//+-------------------------------------------------------------------------------+
   // Obter o endereco relativo do pacote ArmAgeddonRobot
   string RelativePath=ros::package::getPath("ArmAgeddonRobot");
   cout << "Caminho Relativo: " << RelativePath << endl;
@@ -94,9 +84,37 @@ int main(int argc, char **argv)
   cout << "Numero de linhas do arquivo: " << std::count(std::istreambuf_iterator<char>(inFile),std::istreambuf_iterator<char>(), '\n')+1 << endl;
   inFile.close();
 //+-------------------------------------------------------------------------------+
-  // ler o arquivo 
+  // abre o arquivo 
   ifstream inClientFile(RelativePath + "/arquivos/positions.txt");
+//+-------------------------------------------------------------------------------+
+  // faz a leitura do cabecalho  
+  double MaxVelocity;
+  double MaxAcceleration;
+  double PlanningTime ;
+  double eef_step;
+  double jump_threshold;
+  bool avoid_collisions;
   
+  string descartar;
+  inClientFile >> descartar;
+  inClientFile >> descartar >> MaxVelocity;
+  inClientFile >> descartar >> MaxAcceleration;
+  inClientFile >> descartar >> PlanningTime;
+  inClientFile >> descartar >> eef_step;
+  inClientFile >> descartar >> jump_threshold;
+  inClientFile >> descartar >> avoid_collisions;
+  inClientFile >> descartar;
+  
+  cout << descartar << endl;
+  cout << "MaxVelocity: " << MaxVelocity << endl;
+  cout << "MaxAcceleration: " << MaxAcceleration << endl;
+  cout << "PlanningTime: " << PlanningTime << endl;
+  cout << "eef_step: " << eef_step << endl;
+  cout << "jump_threshold: " << jump_threshold << endl;
+  cout << "avoid_collisions: " << avoid_collisions << endl;
+  cout << descartar << endl;
+//+-------------------------------------------------------------------------------+
+  // ler waypoints
   std::vector<geometry_msgs::Pose> waypoints;
 
   ExtractPoints(inClientFile,waypoints);
@@ -106,6 +124,5 @@ int main(int argc, char **argv)
   // for (auto &valor : waypoints)cout << valor;
 //+-------------------------------------------------------------------------------+
   ROS_WARN("FIM");
-  ros::shutdown();
   return 0;
 }
