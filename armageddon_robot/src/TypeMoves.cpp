@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 //+-------------------------------------------------------------------------------+
   ROS_WARN("Iniciando Node");
   // iniciacao padrao para nodes
-  ros::init(argc, argv, "CartesianPath");
+  ros::init(argc, argv, "TypeMoves");
   ros::NodeHandle node_handle;
   ros::AsyncSpinner spinner(1);
   spinner.start();
