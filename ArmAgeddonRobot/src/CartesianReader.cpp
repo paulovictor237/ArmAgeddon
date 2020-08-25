@@ -24,6 +24,7 @@
 #include <iomanip>      // std::setprecision & std::setw
 #include <algorithm>    // std::count
 #include <math.h>       // M_PI
+// #include <angles/angles.h> //angles::from_degrees(rx);
 using namespace std;
 
 void ExtractPoints(std::ifstream &inClientFile ,std::vector<geometry_msgs::Pose> &waypoints){
@@ -40,6 +41,17 @@ void ExtractPoints(std::ifstream &inClientFile ,std::vector<geometry_msgs::Pose>
     inClientFile >> descartar >> ry;
     inClientFile >> descartar >> rz;
     // outputLine(x,y,z,rx,ry,rz);
+
+    // CONVERTER GRAUS EM RADIANOS
+    // (Degrees to Radians)
+    rx = rx*(M_PI/180.0);
+    ry = ry*(M_PI/180.0);
+    rz = rz*(M_PI/180.0);
+    // Outra forma de converter graus em radianos
+    // static double angles::from_degrees	(	double 	degrees	)	
+    // rx = angles::from_degrees(rx);
+    // ry = angles::from_degrees(ry);
+    // rz = angles::from_degrees(rz);
 
     rpy2quaternion.setRPY(rx,ry,rz);
     rpy2quaternion.normalize();
