@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="TypeMoves" pkg="armageddon_robot" type="TypeMoves" respawn="false" output="screen">
+  </node>
+
+</launch>
