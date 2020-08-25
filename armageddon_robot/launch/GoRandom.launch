@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="GoRandom" pkg="armageddon_robot" type="GoRandom" respawn="false" output="screen">
+  </node>
+
+</launch>

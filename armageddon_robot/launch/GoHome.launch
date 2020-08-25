@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="GoHome" pkg="armageddon_robot" type="GoHome" respawn="false" output="screen">
+  </node>
+
+</launch>
