@@ -4,7 +4,7 @@
 
  [CartesianReader.cpp ](armageddon_robot/src/CartesianReader.cpp)
 
-[CartesianReader - Parametros.md](documentos/CartesianReader - Parametros.md)
+[CartesianReader - Parametros.md](CartesianReaderParametros.md)
 
 [positions.txt](armageddon_robot/arquivos/positions.txt)
 
