@@ -1,52 +1,35 @@
-# Configurações
+# ArmAgeddon
 
-## Velocity & Acceleration
+##  CartesianReader
 
-Velocidade e Aceleração máxima
+ [CartesianReader.cpp ](armageddon_robot/src/CartesianReader.cpp)
 
-Para realizar caminhos cartesianos é recomendado usar 5% (0.05)
+[CartesianReader - Parametros.md](documentos/CartesianReader - Parametros.md)
 
-O valor padrão é 10% (0.10)
+[positions.txt](armageddon_robot/arquivos/positions.txt)
 
-Defina seu valor padrão no arquivo joint_limits.yaml 
+## Executar o ArmAgeddon
 
-```c++
-double MaxAcceleration = 0.05;
-double MaxVelocity = 0.05;
+Abra dois terminais e rode os seguintes códigos
+
+> Terminal 1
+
+```bash
+roslaunch armageddon_moveit demo.launch
 ```
-## Planning Time
 
-O planejamento com restrições pode ser lento porque cada amostra deve chamar um solucionador de cinemática inversa. 
+No segundo terminal rode uma das aplicações abaixo:
 
-O valor padrão é 5 segundos 
+> Terminal 2
 
-É comum aumentar esse tempo quando se está calculando uma trajetória de multiplos pontos
-
-Para garantir que o planejador tenha tempo suficiente para ter sucesso aumente para 10s
-
-```c++
-double PlanningTime = 10.0 ;
+```bash
+rosrun armageddon_robot GoRandom
+rosrun armageddon_robot GoHome
+rosrun armageddon_robot GoTypeMoves
+rosrun armageddon_robot CartesianReader
 ```
-## End Effector Step
 
-Tamanho do passo máximo em metros entre o efetor final e os pontos da trajetória
 
-```c++
-double EndEffectorStep = 0.01;
-```
-## Jump Threshold
 
-Desativa-lo pode evitar pulos no calculo da cinematica inversa
+**Copyright &copy; 2020, Paulo Victor Duarte, All rights reserved.**
 
-```c++
-double JumpThreshold = 0.0;
-```
-## Avoid Collisions
-
-Colisões são evitadas se for definido como true.
-
-Entretanto, se as colisões não podem ser evitadas, a função falha. 
-
-```c++
-bool   AvoidCollisions = 1;
-```
