@@ -75,7 +75,7 @@ int main(int argc, char **argv)
   ros::AsyncSpinner spinner(1);
   spinner.start();
   /* This sleep is ONLY to allow Rviz to come up */
-  sleep(2.0);
+  // sleep(2.0);
 //+-------------------------------------------------------------------------------+
   // Obter o endereco relativo do pacote armageddon_robot
   string RelativePath=ros::package::getPath("armageddon_robot");

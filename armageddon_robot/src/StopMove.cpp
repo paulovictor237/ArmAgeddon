@@ -18,7 +18,30 @@
 #include <tf2/LinearMath/Quaternion.h>
 
 #include <ros/console.h>
+#include "std_msgs/String.h"
 using namespace std;
+
+
+// %Tag(CLASS_WITH_DECLARATION)%
+class Listener
+{
+public:
+  moveit::planning_interface::MoveGroupInterface *group;
+  string signal;
+  void callback(const std_msgs::String::ConstPtr& msg);
+};
+// %EndTag(CLASS_WITH_DECLARATION)%
+
+void Listener::callback(const std_msgs::String::ConstPtr& msg)
+{
+  ROS_INFO("I heard: [%s]", msg->data.c_str());
+  this->signal=msg->data.c_str();
+  if(signal=="STOP"){
+    ROS_FATAL("Stop any trajectory in execution");
+    this->group->stop();
+  }
+}
+
 
 int main(int argc, char **argv)
 {
@@ -26,10 +49,10 @@ int main(int argc, char **argv)
   // iniciacao padrao para nodes
   ros::init(argc, argv, "AppGoHome");
   ros::NodeHandle node_handle;
-  ros::AsyncSpinner spinner(1);
+  ros::AsyncSpinner spinner(2);
   spinner.start();
   /* This sleep is ONLY to allow Rviz to come up */
-  sleep(2.0);
+  // sleep(2.0);
 //+-------------------------------------------------------------------------------+
   // nome do grupo que sera movimentado
   static const std::string PLANNING_GROUP = "robot_arm";
@@ -41,21 +64,14 @@ int main(int argc, char **argv)
 //+-------------------------------------------------------------------------------+
   ROS_WARN("Lendo sinal do Drive");
   ROS_INFO("Digite 'STOP' para parar o robo");
-  ROS_INFO("Digite 'EXIT' para sair do programa");
-  // Stop any trajectory execution, if one is active
-  string signal;
-  while(true){
-    cin >> signal;
-    if(signal=="STOP"){
-      ROS_FATAL("Stop any trajectory execution");
-      group.stop();
-    }
-    if(signal=="EXIT"){
-      break;
-    }
-    // sleep(2.0);
-    ros::Duration(0.2).sleep();
-  }
+  // %Tag(SUBSCRIBER)%
+  Listener listener;
+  listener.group=&group;
+  ros::Subscriber sub = node_handle.subscribe("armageddon/stop_robot", 1000, &Listener::callback, &listener);
+  // %EndTag(SUBSCRIBER)%
+  // ros::spin();
+  spinner.start();
+  ros::waitForShutdown();
 //+-------------------------------------------------------------------------------+
   ROS_WARN("FIM");
   ros::shutdown();
