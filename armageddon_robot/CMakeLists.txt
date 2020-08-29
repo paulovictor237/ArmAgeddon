@@ -60,8 +60,9 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_
 # add_executable(pick_place_3 src/pick_place_3.cpp)
 # add_dependencies(pick_place_3 seven_dof_arm_test_generate_messages_cpp)
 # target_link_libraries(pick_place_3 ${catkin_LIBRARIES})
+
 #===========================================================================
-# ... ## Testing ## ...
+# ... ## Applications ## ...
 #===========================================================================
 
 ## Declare a cpp executable
