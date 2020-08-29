@@ -42,19 +42,19 @@ void outputLine( double x,double y,double z,double rx,double ry,double rz )
 }
 
 
-void ExtractPoints(std::ifstream &inClientFile ,std::vector<geometry_msgs::Pose> &waypoints){
+void ExtractPoints(std::ifstream &PositionsFile ,std::vector<geometry_msgs::Pose> &waypoints){
   geometry_msgs::Pose target_pose;
   tf2::Quaternion rpy2quaternion;
 
   double x,y,z,rx,ry,rz;
   string descartar;
-  while (!inClientFile.eof()){
-    inClientFile >> descartar >> x ;
-    inClientFile >> descartar >> y ;
-    inClientFile >> descartar >> z ;
-    inClientFile >> descartar >> rx;
-    inClientFile >> descartar >> ry;
-    inClientFile >> descartar >> rz;
+  while (!PositionsFile.eof()){
+    PositionsFile >> descartar >> x ;
+    PositionsFile >> descartar >> y ;
+    PositionsFile >> descartar >> z ;
+    PositionsFile >> descartar >> rx;
+    PositionsFile >> descartar >> ry;
+    PositionsFile >> descartar >> rz;
     outputLine(x,y,z,rx,ry,rz);
 
     rpy2quaternion.setRPY(rx,ry,rz);
@@ -81,11 +81,26 @@ int main(int argc, char **argv)
     cout << "Arquivo não foi encontrado.\n";
     return 0;
   }
-  cout << "Numero de linhas do arquivo: " << std::count(std::istreambuf_iterator<char>(inFile),std::istreambuf_iterator<char>(), '\n')+1 << endl;
+
+  int contador=0;
+  char leitura;
+
+  while (!inFile.eof()){
+    leitura = inFile.get();
+    if(leitura==','){
+      cout << "Padrão numérico errado.\n";
+      cout << "Não use ',' para separar casas decimais !!.\n";
+      inFile.close();
+      return 0;
+    }
+    if(leitura=='\n') contador++;
+  }
+  cout << "Numero de linhas do arquivo: " << contador+1 << endl;
+
   inFile.close();
 //+-------------------------------------------------------------------------------+
   // abre o arquivo 
-  ifstream inClientFile(RelativePath + "/arquivos/positions.txt");
+  ifstream PositionsFile(RelativePath + "/arquivos/positions.txt");
 //+-------------------------------------------------------------------------------+
   // faz a leitura do cabecalho  
   double MaxVelocity;
@@ -96,14 +111,14 @@ int main(int argc, char **argv)
   bool   AvoidCollisions;
   
   string descartar;
-  inClientFile >> descartar;
-  inClientFile >> descartar >> MaxVelocity;
-  inClientFile >> descartar >> MaxAcceleration;
-  inClientFile >> descartar >> PlanningTime;
-  inClientFile >> descartar >> EndEffectorStep;
-  inClientFile >> descartar >> JumpThreshold;
-  inClientFile >> descartar >> AvoidCollisions;
-  inClientFile >> descartar;
+  PositionsFile >> descartar;
+  PositionsFile >> descartar >> MaxVelocity;
+  PositionsFile >> descartar >> MaxAcceleration;
+  PositionsFile >> descartar >> PlanningTime;
+  PositionsFile >> descartar >> EndEffectorStep;
+  PositionsFile >> descartar >> JumpThreshold;
+  PositionsFile >> descartar >> AvoidCollisions;
+  PositionsFile >> descartar;
   
   cout << descartar << endl;
   cout << "MaxVelocity: " << MaxVelocity << endl;
@@ -117,9 +132,9 @@ int main(int argc, char **argv)
   // faz a leitura dos waypoints
   std::vector<geometry_msgs::Pose> waypoints;
 
-  ExtractPoints(inClientFile,waypoints);
+  ExtractPoints(PositionsFile,waypoints);
   
-  inClientFile.close();
+  PositionsFile.close();
 
   // for (auto &valor : waypoints)cout << valor;
 //+-------------------------------------------------------------------------------+
