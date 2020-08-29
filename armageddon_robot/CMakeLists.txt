@@ -94,13 +94,3 @@ install(TARGETS CartesianReader DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 add_executable(StopMove src/StopMove.cpp)
 target_link_libraries(StopMove ${catkin_LIBRARIES})
 install(TARGETS StopMove DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
-## Declare a cpp executable
-add_executable(listener src/listener.cpp)
-target_link_libraries(listener ${catkin_LIBRARIES})
-install(TARGETS listener DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
-## Declare a cpp executable
-add_executable(ServiceServer  src/ServiceServer .cpp)
-target_link_libraries(ServiceServer  ${catkin_LIBRARIES})
-install(TARGETS ServiceServer  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

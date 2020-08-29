@@ -39,10 +39,25 @@ int main(int argc, char **argv)
   const robot_state::JointModelGroup* joint_model_group = group.getCurrentState()->getJointModelGroup(PLANNING_GROUP);
   // aqui inicia o programa de fato
 //+-------------------------------------------------------------------------------+
+  ROS_WARN("Lendo sinal do Drive");
+  ROS_INFO("Digite 'STOP' para parar o robo");
+  ROS_INFO("Digite 'EXIT' para sair do programa");
   // Stop any trajectory execution, if one is active
-  ROS_FATAL("Stop any trajectory execution");
-  group.stop();
+  string signal;
+  while(true){
+    cin >> signal;
+    if(signal=="STOP"){
+      ROS_FATAL("Stop any trajectory execution");
+      group.stop();
+    }
+    if(signal=="EXIT"){
+      break;
+    }
+    // sleep(2.0);
+    ros::Duration(0.2).sleep();
+  }
 //+-------------------------------------------------------------------------------+
+  ROS_WARN("FIM");
   ros::shutdown();
 
  return 0;
