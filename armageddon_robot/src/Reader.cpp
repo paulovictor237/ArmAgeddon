@@ -30,14 +30,15 @@ using namespace std;
 
 void outputLine( double x,double y,double z,double rx,double ry,double rz )
 {
-  cout << std::fixed << std::setprecision(2);
-  cout << "FileLine>> ";
-  cout << "x: "  << x  << setw( 8 );
-  cout << "y: "  << y  << setw( 8 );
-  cout << "z: "  << z  << setw( 8 );
-  cout << "rx: " << rx << setw( 8 ); 
-  cout << "ry: " << ry << setw( 8 );
-  cout << "rz: " << rz << endl;
+  cout << std::fixed << std::setprecision(5);
+  cout <<       "| "         << x  ; 
+  cout << (x <0?" | ":"  | ")  << y  ; 
+  cout << (y <0?" | ":"  | ")  << z  ;
+  cout << std::fixed << std::setprecision(0);
+  cout << (z <0?" | ":"  | ")  << rx ; 
+  cout << (rx<0?" | ":"  | ")  << ry ;
+  cout << (ry<0?" | ":"  | ")  << rz ;
+  cout << (rz<0?" | ":"  | ") << endl;
   return;
 }
 
@@ -55,6 +56,7 @@ void ExtractPoints(std::ifstream &PositionsFile ,std::vector<geometry_msgs::Pose
     PositionsFile >> descartar >> rx;
     PositionsFile >> descartar >> ry;
     PositionsFile >> descartar >> rz;
+    PositionsFile >> descartar;
     outputLine(x,y,z,rx,ry,rz);
 
     rpy2quaternion.setRPY(rx,ry,rz);
@@ -76,7 +78,7 @@ int main(int argc, char **argv)
   cout << "Caminho Relativo: " << RelativePath << endl;
 //+-------------------------------------------------------------------------------+
   // Informar o numero de linhas do arquivo 
-  std::ifstream inFile(RelativePath + "/arquivos/positions.txt"); 
+  std::ifstream inFile(RelativePath + "/arquivos/positions.md"); 
   if(!inFile) {
     cout << "Arquivo não foi encontrado.\n";
     return 0;
@@ -100,7 +102,7 @@ int main(int argc, char **argv)
   inFile.close();
 //+-------------------------------------------------------------------------------+
   // abre o arquivo 
-  ifstream PositionsFile(RelativePath + "/arquivos/positions.txt");
+  ifstream PositionsFile(RelativePath + "/arquivos/positions.md");
 //+-------------------------------------------------------------------------------+
   // faz a leitura do cabecalho  
   double MaxVelocity;
@@ -111,24 +113,25 @@ int main(int argc, char **argv)
   bool   AvoidCollisions;
   
   string descartar;
-  PositionsFile >> descartar;
+  char line[256];
+  for (int i = 0; i < 3; i++)PositionsFile.getline(line,256);
   PositionsFile >> descartar >> MaxVelocity;
   PositionsFile >> descartar >> MaxAcceleration;
   PositionsFile >> descartar >> PlanningTime;
   PositionsFile >> descartar >> EndEffectorStep;
   PositionsFile >> descartar >> JumpThreshold;
   PositionsFile >> descartar >> AvoidCollisions;
-  PositionsFile >> descartar;
+  for (int i = 0; i < 5; i++)PositionsFile.getline(line,256);
   
-  cout << descartar << endl;
   cout << "MaxVelocity: " << MaxVelocity << endl;
   cout << "MaxAcceleration: " << MaxAcceleration << endl;
   cout << "PlanningTime: " << PlanningTime << endl;
   cout << "EndEffectorStep: " << EndEffectorStep << endl;
   cout << "JumpThreshold: " << JumpThreshold << endl;
   cout << "AvoidCollisions: " << AvoidCollisions << endl;
-  cout << descartar << endl;
-//+-------------------------------------------------------------------------------+
+  cout << "| X        | y        | Z        | RX   | RY | RZ   |" << endl;
+  cout << "| -------- | -------- | -------- | ---- | -- | ---- |" << endl;
+  //+-------------------------------------------------------------------------------+
   // faz a leitura dos waypoints
   std::vector<geometry_msgs::Pose> waypoints;
 
@@ -138,6 +141,6 @@ int main(int argc, char **argv)
 
   // for (auto &valor : waypoints)cout << valor;
 //+-------------------------------------------------------------------------------+
-  ROS_WARN("FIM");
+  // ROS_WARN("FIM");
   return 0;
 }
