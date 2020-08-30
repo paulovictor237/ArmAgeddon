@@ -27,19 +27,19 @@
 // #include <angles/angles.h> //angles::from_degrees(rx);
 using namespace std;
 
-void ExtractPoints(std::ifstream &inClientFile ,std::vector<geometry_msgs::Pose> &waypoints){
+void ExtractPoints(std::ifstream &PositionsFile ,std::vector<geometry_msgs::Pose> &waypoints){
   geometry_msgs::Pose target_pose;
   tf2::Quaternion rpy2quaternion;
 
   double x,y,z,rx,ry,rz;
   string descartar;
-  while (!inClientFile.eof()){
-    inClientFile >> descartar >> x ;
-    inClientFile >> descartar >> y ;
-    inClientFile >> descartar >> z ;
-    inClientFile >> descartar >> rx;
-    inClientFile >> descartar >> ry;
-    inClientFile >> descartar >> rz;
+  while (!PositionsFile.eof()){
+    PositionsFile >> descartar >> x ;
+    PositionsFile >> descartar >> y ;
+    PositionsFile >> descartar >> z ;
+    PositionsFile >> descartar >> rx;
+    PositionsFile >> descartar >> ry;
+    PositionsFile >> descartar >> rz;
     // outputLine(x,y,z,rx,ry,rz);
 
     // CONVERTER GRAUS EM RADIANOS
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
   ros::AsyncSpinner spinner(1);
   spinner.start();
   /* This sleep is ONLY to allow Rviz to come up */
-  sleep(2.0);
+  // sleep(2.0);
 //+-------------------------------------------------------------------------------+
   // Obter o endereco relativo do pacote armageddon_robot
   string RelativePath=ros::package::getPath("armageddon_robot");
@@ -88,11 +88,28 @@ int main(int argc, char **argv)
     ros::shutdown();
     return 0;
   }
-  cout << "Numero de linhas do arquivo: " << std::count(std::istreambuf_iterator<char>(inFile),std::istreambuf_iterator<char>(), '\n')+1 << endl;
+
+  int contador=0;
+  char leitura;
+
+  while (!inFile.eof()){
+    leitura = inFile.get();
+    if(leitura==','){
+      ROS_FATAL("Padrao numerico errado");
+      ROS_FATAL("Nao use ',' para separar casas decimais !!");
+      inFile.close();
+      ros::Duration(0.5).sleep();  // Sleep por meio segundo
+      ros::shutdown();
+      return 0;
+    }
+    if(leitura=='\n') contador++;
+  }
+  cout << "Numero de linhas do arquivo: " << contador+1 << endl;
+
   inFile.close();
 //+-------------------------------------------------------------------------------+
   // abre o arquivo 
-  ifstream inClientFile(RelativePath + "/arquivos/positions.txt");
+  ifstream PositionsFile(RelativePath + "/arquivos/positions.txt");
 //+-------------------------------------------------------------------------------+
   // faz a leitura do cabecalho  
   double MaxVelocity;
@@ -103,14 +120,14 @@ int main(int argc, char **argv)
   bool   AvoidCollisions;
   
   string descartar;
-  inClientFile >> descartar;
-  inClientFile >> descartar >> MaxVelocity;
-  inClientFile >> descartar >> MaxAcceleration;
-  inClientFile >> descartar >> PlanningTime;
-  inClientFile >> descartar >> EndEffectorStep;
-  inClientFile >> descartar >> JumpThreshold;
-  inClientFile >> descartar >> AvoidCollisions;
-  inClientFile >> descartar;
+  PositionsFile >> descartar;
+  PositionsFile >> descartar >> MaxVelocity;
+  PositionsFile >> descartar >> MaxAcceleration;
+  PositionsFile >> descartar >> PlanningTime;
+  PositionsFile >> descartar >> EndEffectorStep;
+  PositionsFile >> descartar >> JumpThreshold;
+  PositionsFile >> descartar >> AvoidCollisions;
+  PositionsFile >> descartar;
   
   // cout << descartar << endl;
   cout << "MaxVelocity: " << MaxVelocity << endl;
@@ -124,9 +141,9 @@ int main(int argc, char **argv)
   // faz a leitura dos waypoints
   std::vector<geometry_msgs::Pose> waypoints;
 
-  ExtractPoints(inClientFile,waypoints);
+  ExtractPoints(PositionsFile,waypoints);
   
-  inClientFile.close();
+  PositionsFile.close();
 
   // for (auto &valor : waypoints)cout << valor;
 //+-------------------------------------------------------------------------------+

@@ -23,12 +23,12 @@ int main(int argc, char **argv)
 //+-------------------------------------------------------------------------------+
   ROS_WARN("Iniciando Node");
   // iniciacao padrao para nodes
-  ros::init(argc, argv, "CartesianPath");
+  ros::init(argc, argv, "TypeMoves");
   ros::NodeHandle node_handle;
   ros::AsyncSpinner spinner(1);
   spinner.start();
   /* This sleep is ONLY to allow Rviz to come up */
-  sleep(2.0);
+  // sleep(2.0);
 //+-------------------------------------------------------------------------------+
   ROS_WARN("Iniciando PLANNING_GROUP");
   // nome do grupo que sera movimentado
