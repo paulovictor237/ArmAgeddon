@@ -21,6 +21,9 @@
 #include "std_msgs/String.h"
 using namespace std;
 
+//+-------------------------------------------------------------------------------+
+// 1. O topico funciona como uma thread.
+// 2. Para passar parâmetros para uma thread no ROS eh necessario criar uma classe
 
 // %Tag(CLASS_WITH_DECLARATION)%
 class Listener
@@ -32,6 +35,7 @@ public:
 };
 // %EndTag(CLASS_WITH_DECLARATION)%
 
+// aqui declaramos a funcao (thread)
 void Listener::callback(const std_msgs::String::ConstPtr& msg)
 {
   ROS_INFO("I heard: [%s]", msg->data.c_str());
@@ -41,7 +45,7 @@ void Listener::callback(const std_msgs::String::ConstPtr& msg)
     this->group->stop();
   }
 }
-
+//+-------------------------------------------------------------------------------+
 
 int main(int argc, char **argv)
 {
@@ -62,6 +66,7 @@ int main(int argc, char **argv)
   const robot_state::JointModelGroup* joint_model_group = group.getCurrentState()->getJointModelGroup(PLANNING_GROUP);
   // aqui inicia o programa de fato
 //+-------------------------------------------------------------------------------+
+  // Cria o Topico 'armageddon/stop_robot' para o node node_handle
   ROS_WARN("Lendo sinal do Drive");
   ROS_INFO("Digite 'STOP' para parar o robo");
   // %Tag(SUBSCRIBER)%
@@ -76,5 +81,5 @@ int main(int argc, char **argv)
   ROS_WARN("FIM");
   ros::shutdown();
 
- return 0;
+  return 0;
 }

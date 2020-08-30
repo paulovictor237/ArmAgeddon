@@ -22,5 +22,5 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(joint_interface_node src/joint_interface_node.cpp)
-target_link_libraries(joint_interface_node ${catkin_LIBRARIES})
+add_executable(joint_states_node src/joint_states_node.cpp)
+target_link_libraries(joint_states_node ${catkin_LIBRARIES})
