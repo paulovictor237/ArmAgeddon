@@ -40,6 +40,7 @@ void ExtractPoints(std::ifstream &PositionsFile ,std::vector<geometry_msgs::Pose
     PositionsFile >> descartar >> rx;
     PositionsFile >> descartar >> ry;
     PositionsFile >> descartar >> rz;
+    PositionsFile >> descartar;
     // outputLine(x,y,z,rx,ry,rz);
 
     // CONVERTER GRAUS EM RADIANOS
@@ -82,7 +83,7 @@ int main(int argc, char **argv)
   cout << "Caminho Relativo: " << RelativePath << endl;
 //+-------------------------------------------------------------------------------+
   // Informar o numero de linhas do arquivo 
-  std::ifstream inFile(RelativePath + "/arquivos/positions.txt"); 
+  std::ifstream inFile(RelativePath + "/arquivos/positions.md"); 
   if(!inFile) {
     cout << "Arquivo não foi encontrado.\n";
     ros::shutdown();
@@ -109,7 +110,7 @@ int main(int argc, char **argv)
   inFile.close();
 //+-------------------------------------------------------------------------------+
   // abre o arquivo 
-  ifstream PositionsFile(RelativePath + "/arquivos/positions.txt");
+  ifstream PositionsFile(RelativePath + "/arquivos/positions.md");
 //+-------------------------------------------------------------------------------+
   // faz a leitura do cabecalho  
   double MaxVelocity;
@@ -120,16 +121,16 @@ int main(int argc, char **argv)
   bool   AvoidCollisions;
   
   string descartar;
-  PositionsFile >> descartar;
+  char line[256];
+  for (int i = 0; i < 3; i++)PositionsFile.getline(line,256);
   PositionsFile >> descartar >> MaxVelocity;
   PositionsFile >> descartar >> MaxAcceleration;
   PositionsFile >> descartar >> PlanningTime;
   PositionsFile >> descartar >> EndEffectorStep;
   PositionsFile >> descartar >> JumpThreshold;
   PositionsFile >> descartar >> AvoidCollisions;
-  PositionsFile >> descartar;
+  for (int i = 0; i < 5; i++)PositionsFile.getline(line,256);
   
-  // cout << descartar << endl;
   cout << "MaxVelocity: " << MaxVelocity << endl;
   cout << "MaxAcceleration: " << MaxAcceleration << endl;
   cout << "PlanningTime: " << PlanningTime << endl;
