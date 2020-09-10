@@ -4,33 +4,41 @@ Este trabalho foi desenvolvido com a versão recomendada (2020) ROS1 Melodic Mor
 
 <img src="documentos/imagens/planning.png"/>
 
-# A. Software prerequisites
+# A. Requisitos de software
 
 1. Ubuntu Budgie 18.04 LTS
 2. ROS Melodic Morenia
 3. MoveIt
 
-# B. Installation
+# B. Instalação
 
 Em um outro repertório de minha autoria você pode encontrar um bash-script para instalar o Moveit em um Ubuntu 18.04 LTS.
 
 Siga os passos descritos em: [BashScript-RosMoveit](https://github.com/paulovictor237/BashScript-RosMoveit)
 
-# C. Applications
+# C. Aplicações
 
 Aqui se encontra a descrição das 5 aplicações implementadas.
 
 **1. GoRandom**
 
-Vai para uma posição randomica, nem sempre o caminho será possível. Todavia, é enviado uma mensagem sinalizando quando um erro ocorrer.
+O objetivo dessa aplicação é criar um código curto e simples que apenas executa um movimento randômico. Como normalmente o ponto está muito distante da atual posição do robô, isto origina dois problemas, o tempo padrão para o MoveIt calcular a trajetória é insuficiente e o caminho é imprevisível. Para melhorar a frequência com que esse programa encontra uma trajetória de sucesso, o tempo padrão de 5 segundos foi aumentado para 10, e o algoritmo de planejamento de trajetória foi forçado para executar com o RRT, para garantir que uma trajetória seja encontrada, mesmo não sendo a ideal.
 
 **2. GoHome**
 
-Escreve em todas as juntas o valor `ZERO`.
+A aplicação GoHome força todas as juntas do robô para o valor zero, independente de onde ele esteja. Este código também serve como uma demonstração dos tipos de mensagens que o ROS pode emitir, e imprime na tela várias informações do robô extraídas dos próprios métodos da classe MoveGroupInterface.
 
 **3. GoTypeMoves**
 
-Ilustra as várias formas de se descrever um movimento em c++.
+TypeMoves é uma demonstração dos métodos de movimento que o MoveGroupInterface dispõe. A aplicação executa as seguintes tarefas.
+
++ Planejar e executar trajetória para um ponto qualquer;
++ Planejar e executar trajetória inserindo valores na juntas;
++ Planejar e executar trajetória lineares em um Plano Cartesiano
+
+Nesta prática foi necessário converter a orientação *Roll Pitch Yall* em Quaternions antes de atribuir os valores ao robô.
+
+O código também faz uso da classe "MoveItVisualTools" para apresentar mensagens e desenhar trajetórias no Rviz.
 
 **4. CartesianReader**
 
@@ -44,9 +52,9 @@ Esta aplicação para qualquer movimento em que o robo esteja operando. Após ex
 rostopic pub -1 /armageddon/stop_robot std_msgs/String "data: 'STOP'" 
 ```
 
-# D. Execution
+# D. Execução
 
-Abra dois terminais e rode os seguintes códigos. Você pode descomentar o `use_gui:=true` caso queira controlar os motores com uma interface gráfica.
+Abra dois terminais e execute os seguintes códigos. Você pode descomentar o `use_gui:=true` caso queira controlar os motores com uma interface gráfica.
 
 > Terminal 1
 
