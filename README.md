@@ -42,16 +42,28 @@ O código também faz uso da classe "MoveItVisualTools" para apresentar mensagen
 
 **4. CartesianReader**
 
-A aplicação CartesianReader lê o arquivo [positions.md](armageddon_robot/arquivos/positions.md) executa a chamada da função **computeCartesianPath**. Os parâmetros dessa função são descritos no arquivo [CartesianReader.md](documentos/CartesianReader.md).
+O programa CartesianReader utiliza a função CartesianPath implementada pela classe MoveGroupInterface, já apresentada na aplicação TypeMoves. Esta função recebe como entrada um vetor de pontos e planeja a trajetória com movimentos lineares. Outros parâmetros de inicialização para a função listados abaixo.
+
++ Velocidade e Aceleração máxima;
++ Tempo máximo para o cálculo da cinemática inversa;
++ Tamanho do passo, em metros, entre os pontos da trajetória;
++ Ativar ou desativar a rotina que evita colisões com os objetos do ambiente ao planejar a trajetória.
+
+Os parâmetros e o conjunto de pontos a serem passados para a função são declarados em um arquivo de extensão markdown presente nos diretórios do pacote armageddon\_robot. O Programa lê  o arquivo [positions.md](armageddon_robot/arquivos/positions.md) e cria o planejamento de trajetória entre os pontos. Os parâmetros dessa função são descritos no arquivo [CartesianReader.md](documentos/formulario/CartesianReader.md).
 
 **5. StopMove**
 
-Esta aplicação para qualquer movimento em que o robo esteja operando. Após executar esta aplicação é necessário publicar a palavra 'STOP' no Tópico `/armageddon/stop_robot` em um terminal separado.
+A última aplicação que foi desenvolvida é a StopMove. O programa suspende qualquer movimento do robô independente da aplicação em operação.
+
+O programa cria um tópico chamado "/armageddon/stop\_robot", que aguarda uma mensagem com a palavra "STOP" para executar a chamada da função "MoveGroupInterface::stop". 
+
+A criação de um grupo de planejamento só é permitido na Main. Todavia, a construção de um tópico é através de uma thread, o que dificulta passar variáveis da main como parâmetro. A solução foi criar uma classe-thread, nos atributos há um ponteiro que recebe por referência o grupo de planejamento criado na main.
+
+A mensagem pode ser publicada como o código abaixo em um terminal separado.
 
 ```
 rostopic pub -1 /armageddon/stop_robot std_msgs/String "data: 'STOP'" 
 ```
-
 # D. Execução
 
 Abra dois terminais e execute os seguintes códigos. Você pode descomentar o `use_gui:=true` caso queira controlar os motores com uma interface gráfica.
@@ -73,6 +85,31 @@ rosrun armageddon_robot GoTypeMoves
 rosrun armageddon_robot CartesianReader
 rosrun armageddon_robot StopMove
 ```
+# E. ROS GUI
+
+O rqt possui um arsenal completo de ferramentas gráficas que facilitam o entendimento da abstração das linhas de código. Uma das mais interessantes é o **rqt_graph**. Nele é possível mapear a relação entre os tópicos do MoveIt e as aplicações.
+
+```bash
+rosrun rqt_graph rqt_graph
+```
+# F. Captura de pontos pelo simulador
+
+Para mapear os pontos utilizado na aplicação CartesianReader, é desejado que os pontos estejam dentro do espaço de trabalho do robô. Uma forma simples e rápida de obter a posição e orientação do robô dentro de seu espaço de trabalho pode ser feita através do "Motion Planning". A ideia é mover o robô com esta ferramenta, e através do tópico de *Feedback* obter a localização do TCP. A informação do tópico também pode ser visualizada com a interface gráfica rqt. 
+```
+ rosrun rqt_topic rqt_topic
+```
+
+```bash
+rostopic echo -c /rviz_moveit_motion_planning_display/robot_interaction_interactive_marker_topic/feedback
+```
+
+ # Extra
+
+Dentro dos diretórios do projeto há também imagens e vídeos para serem explorados.
+
++ [Vídeos](documentos\videos)
+
++ [Imagens](documentos\imagens)
 
 License
 ----
