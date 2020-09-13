@@ -23,12 +23,12 @@ int main(int argc, char **argv)
 //+-------------------------------------------------------------------------------+
   ROS_WARN("Iniciando Node");
   // iniciacao padrao para nodes
-  ros::init(argc, argv, "CartesianPath");
+  ros::init(argc, argv, "TypeMoves");
   ros::NodeHandle node_handle;
   ros::AsyncSpinner spinner(1);
   spinner.start();
   /* This sleep is ONLY to allow Rviz to come up */
-  sleep(2.0);
+  // sleep(2.0);
 //+-------------------------------------------------------------------------------+
   ROS_WARN("Iniciando PLANNING_GROUP");
   // nome do grupo que sera movimentado
@@ -114,7 +114,7 @@ int main(int argc, char **argv)
   // planeja o movimento mas ainda nao executa
 	moveit::planning_interface::MoveGroupInterface::Plan my_plan;
 	moveit::planning_interface::MoveItErrorCode success = group.plan(my_plan);
-  ROS_INFO("Visualizing plan 1 (pose goal) %s",success.val ? "":"FAILED");
+  ROS_INFO("Visualizing plan 1 (pose goal) %s",success.val ? "SUCCESS":"FAILED");
 
   // mostra o movimento no visual_tools
   ROS_INFO_NAMED("tutorial", "Visualizing plan 1 as trajectory line");
@@ -141,7 +141,7 @@ int main(int argc, char **argv)
   group.setJointValueTarget(joint_group_positions);
 
   success = (group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
-  ROS_INFO_NAMED("tutorial", "Visualizing plan 2 (joint space goal) %s", success ? "" : "FAILED");
+  ROS_INFO_NAMED("tutorial", "Visualizing plan 2 (joint space goal) %s", success ? "SUCCESS" : "FAILED");
 
   // Visualize the plan in RViz
   // visual_tools.publishAxisLabeled(target_pose1, "pose1");

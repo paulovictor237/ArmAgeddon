@@ -60,8 +60,9 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_
 # add_executable(pick_place_3 src/pick_place_3.cpp)
 # add_dependencies(pick_place_3 seven_dof_arm_test_generate_messages_cpp)
 # target_link_libraries(pick_place_3 ${catkin_LIBRARIES})
+
 #===========================================================================
-# ... ## Testing ## ...
+# ... ## Applications ## ...
 #===========================================================================
 
 ## Declare a cpp executable
@@ -88,3 +89,8 @@ install(TARGETS TypeMoves DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 add_executable(CartesianReader src/CartesianReader.cpp)
 target_link_libraries(CartesianReader ${catkin_LIBRARIES})
 install(TARGETS CartesianReader DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+## Declare a cpp executable
+add_executable(StopMove src/StopMove.cpp)
+target_link_libraries(StopMove ${catkin_LIBRARIES})
+install(TARGETS StopMove DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
