@@ -107,9 +107,9 @@ rostopic echo -c /rviz_moveit_motion_planning_display/robot_interaction_interact
 
 Dentro dos diretórios do projeto há também imagens e vídeos para serem explorados.
 
-+ [Vídeos](documentos\videos)
++ [Vídeos](documentos/videos)
 
-+ [Imagens](documentos\imagens)
++ [Imagens](documentos/imagens)
 
 License
 ----
