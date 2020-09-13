@@ -17,7 +17,7 @@
 #define juntas_num 6
 
 //+------------------------------([{ introducao }])-------------------------------+
-// Para criar uma interrace entre o ROS e o hardware, devemos criar um node e
+// Para criar uma interface entre o ROS e o hardware, devemos criar um node e
 // inscreve-lo no topico "/joint_state" !!!
 // este tópico contem a posicao das juntas do robo em radianos
 //+-------------------------------------------------------------------------------+

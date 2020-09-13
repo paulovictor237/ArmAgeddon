@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 //+-------------------------------------------------------------------------------+
   // Cria o Topico 'armageddon/stop_robot' para o node node_handle
   ROS_WARN("Lendo sinal do Drive");
-  ROS_INFO("Digite 'STOP' para parar o robo");
+  ROS_INFO("No tópico 'armageddon/stop_robot' digite 'STOP' para parar o robo");
   // %Tag(SUBSCRIBER)%
   Listener listener;
   listener.group=&group;
