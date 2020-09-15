@@ -59,7 +59,9 @@ O programa cria um tópico chamado "/armageddon/stop\_robot", que aguarda uma me
 
 A criação de um grupo de planejamento só é permitido na Main. Todavia, a construção de um tópico é através de uma thread, o que dificulta passar variáveis da main como parâmetro. A solução foi criar uma classe-thread, nos atributos há um ponteiro que recebe por referência o grupo de planejamento criado na main.
 
-A mensagem pode ser publicada como o código abaixo em um terminal separado.
+O roscpp se encarrega de realizar o *callback* sempre que uma nova mensagem chegar ao tópico, desta forma, a frequência de leitura sempre será síncrona à taxa de publicação no tópico. Em outras palavras, espera-se que o tópico receba a mensagem imediatamente após ela ser publicada, considerando a taxa de processamento do computador.
+
+Por padrão o rostopic pub publica uma mensagem ao tópico e mantem bloqueada até que o usuário force a interrupção do programa pressionando ctrl-c. Todavia, é possível passar como argumento dessa função o valor "-1" como é mostrado abaixo, assim, o rostopic manterá a mensagem travada por 3 segundos e encerrará automaticamente a publicação.
 
 ```
 rostopic pub -1 /armageddon/stop_robot std_msgs/String "data: 'STOP'" 
