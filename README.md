@@ -1,8 +1,8 @@
 # Arm-Ageddon
 
-Este trabalho foi desenvolvido com a versão recomendada (2020) ROS1 Melodic Morenia para a distribuição Linux Ubuntu Budgie 18.04 LTS, e compilado com a extensão catkin-tools (catkin build). Vale o registro que a última versão do ROS1 será a Noetic Ninjemys, mas no momento se encontra em fase Beta. Existe também o projeto Moveit 2 para o ROS2, porém ainda está em processo de migração.
+This work was developed with the recommended version (2020) ROS1 Melodic Morenia for Linux Ubuntu Budgie 18.04 LTS distribution, and compiled with the catkin-tools extension (catkin build). It is worth noting that the last version of ROS1 will be Noetic Ninjemys, but it is currently in the beta phase. There is also the Moveit 2 project for ROS2, but it is still in the migration process.
 
-🎬 [Overview - Video](documentos/videos/OverView.mp4) 
+🎬 [Overview - Video](documentos/videos/OverView.mp4)
 
 📚 [Descrição completa do projeto](TCC_Paulo_Victor_Duarte.pdf)
 
@@ -10,117 +10,121 @@ Este trabalho foi desenvolvido com a versão recomendada (2020) ROS1 Melodic Mor
 
 <img src="documentos/imagens/planning.png"/>
 
-# A. Requisitos de software
+# A. Software Requirements
 
 1. Ubuntu Budgie 18.04 LTS
 2. ROS Melodic Morenia
 3. MoveIt
 
-# B. Instalação
+# B. Installation
 
-Em um outro repertório de minha autoria você pode encontrar um bash-script para instalar o Moveit em um Ubuntu 18.04 LTS.
+In another repository of my authorship, you can find a bash-script to install Moveit on an Ubuntu 18.04 LTS.
 
-Siga os passos descritos em: [BashScript-RosMoveit](https://github.com/paulovictor237/BashScript-RosMoveit)
+Follow the steps described in: [BashScript-RosMoveit](https://github.com/paulovictor237/BashScript-RosMoveit)
 
-# C. Aplicações
+# C. Applications
 
-Aqui se encontra a descrição das 5 aplicações implementadas.
+Here is the description of the 5 implemented applications.
 
 **1. GoRandom**
 
-O objetivo dessa aplicação é criar um código curto e simples que apenas executa um movimento randômico. Como normalmente o ponto está muito distante da atual posição do robô, isto origina dois problemas, o tempo padrão para o MoveIt calcular a trajetória é insuficiente e o caminho é imprevisível. Para melhorar a frequência com que esse programa encontra uma trajetória de sucesso, o tempo padrão de 5 segundos foi aumentado para 10, e o algoritmo de planejamento de trajetória foi forçado para executar com o RRT, para garantir que uma trajetória seja encontrada, mesmo não sendo a ideal.
+The objective of this application is to create a short and simple code that only performs a random movement. Since the point is usually far from the robot's current position, this creates two problems: the standard time for MoveIt to calculate the trajectory is insufficient and the path is unpredictable. To improve the frequency with which this program finds a successful trajectory, the standard time of 5 seconds was increased to 10, and the trajectory planning algorithm was forced to run with RRT to ensure that a trajectory is found, even if it is not the ideal one.
 
 **2. GoHome**
 
-A aplicação GoHome força todas as juntas do robô para o valor zero, independente de onde ele esteja. Este código também serve como uma demonstração dos tipos de mensagens que o ROS pode emitir, e imprime na tela várias informações do robô extraídas dos próprios métodos da classe MoveGroupInterface.
+The GoHome application forces all robot joints to the zero value, regardless of where it is. This code also serves as a demonstration of the types of messages that ROS can emit, and prints on the screen various information about the robot extracted from the MoveGroupInterface class methods themselves.
 
 **3. GoTypeMoves**
 
-TypeMoves é uma demonstração dos métodos de movimento que o MoveGroupInterface dispõe. A aplicação executa as seguintes tarefas.
+TypeMoves is a demonstration of the movement methods that MoveGroupInterface has. The application performs the following tasks.
 
-+ Planejar e executar trajetória para um ponto qualquer;
-+ Planejar e executar trajetória inserindo valores na juntas;
-+ Planejar e executar trajetória lineares em um Plano Cartesiano
+- Plan and execute trajectory for any point;
+- Plan and execute trajectory by inserting joint values;
+- Plan and execute linear trajectories in a Cartesian Plane
 
-Nesta prática foi necessário converter a orientação *Roll Pitch Yall* em Quaternions antes de atribuir os valores ao robô.
+In this practice, it was necessary to convert the Roll Pitch Yall orientation into Quaternions before assigning values to the robot.
 
-O código também faz uso da classe "MoveItVisualTools" para apresentar mensagens e desenhar trajetórias no Rviz.
+The code also uses the "MoveItVisualTools" class to present messages and draw trajectories in Rviz.
 
 **4. CartesianReader**
 
-O programa CartesianReader utiliza a função CartesianPath implementada pela classe MoveGroupInterface, já apresentada na aplicação TypeMoves. Esta função recebe como entrada um vetor de pontos e planeja a trajetória com movimentos lineares. Outros parâmetros de inicialização para a função listados abaixo.
+The CartesianReader program uses the CartesianPath function implemented by the MoveGroupInterface class, already presented in the TypeMoves application. This function takes as input a vector of points and plans the trajectory with linear movements. Other initialization parameters for the function listed below.
 
-+ Velocidade e Aceleração máxima;
-+ Tempo máximo para o cálculo da cinemática inversa;
-+ Tamanho do passo, em metros, entre os pontos da trajetória;
-+ Ativar ou desativar a rotina que evita colisões com os objetos do ambiente ao planejar a trajetória.
+- Maximum Velocity and Acceleration;
+- Maximum time for inverse kinematics calculation;
+- Step size, in meters, between trajectory points;
+- Activate or deactivate the routine that avoids collisions with environment objects when planning the trajectory.
 
-Os parâmetros e o conjunto de pontos a serem passados para a função são declarados em um arquivo de extensão markdown presente nos diretórios do pacote armageddon\_robot. O Programa lê  o arquivo [positions.md](armageddon_robot/arquivos/positions.md) e cria o planejamento de trajetória entre os pontos. Os parâmetros dessa função são descritos no arquivo [CartesianReader.md](documentos/formulario/CartesianReader.md).
+The parameters and set of points to be passed to the function are declared in a markdown file with the extension ".md" present in the directories of the armageddon_robot package. The program reads the file **[positions.md](armageddon_robot/arquivos/positions.md)** and creates the trajectory planning between the points. The parameters of this function are described in the file **[CartesianReader.md](documentos/formulario/CartesianReader.md)**.
 
 **5. StopMove**
 
-A última aplicação que foi desenvolvida é a StopMove. O programa suspende qualquer movimento do robô independente da aplicação em operação.
+The last developed application is StopMove. The program suspends any movement of the robot regardless of the application in operation.
 
-O programa cria um tópico chamado "/armageddon/stop\_robot", que aguarda uma mensagem com a palavra "STOP" para executar a chamada da função "MoveGroupInterface::stop". 
+The program creates a topic called "/armageddon/stop_robot", which waits for a message with the word "STOP" to execute the call of the function "MoveGroupInterface::stop".
 
-A criação de um grupo de planejamento só é permitido na Main. Todavia, a construção de um tópico é através de uma thread, o que dificulta passar variáveis da main como parâmetro. A solução foi criar uma classe-thread, nos atributos há um ponteiro que recebe por referência o grupo de planejamento criado na main.
+The creation of a planning group is only allowed in the main. However, the construction of a topic is through a thread, which makes it difficult to pass variables from the main as a parameter. The solution was to create a class-thread, in which the attributes have a pointer that receives the planning group created in the main by reference.
 
-O roscpp se encarrega de realizar o *callback* sempre que uma nova mensagem chegar ao tópico, desta forma, a frequência de leitura sempre será síncrona à taxa de publicação no tópico. Em outras palavras, espera-se que o tópico receba a mensagem imediatamente após ela ser publicada, considerando a taxa de processamento do computador.
+The roscpp is responsible for performing the callback whenever a new message arrives at the topic, thus, the reading frequency will always be synchronous with the publication rate on the topic. In other words, it is expected that the topic receives the message immediately after it is published, considering the computer processing rate.
 
-Por padrão o rostopic pub publica uma mensagem ao tópico e mantem bloqueada até que o usuário force a interrupção do programa pressionando ctrl-c. Todavia, é possível passar como argumento dessa função o valor "-1" como é mostrado abaixo, assim, o rostopic manterá a mensagem travada por 3 segundos e encerrará automaticamente a publicação.
+By default, rostopic pub publishes a message to the topic and remains blocked until the user forces the program interruption by pressing ctrl-c. However, it is possible to pass the value "-1" as an argument to this function as shown below, so rostopic will keep the message locked for 3 seconds and automatically terminate the publication.
 
+```shell
+rostopic pub -1 /armageddon/stop_robot std_msgs/String "data: 'STOP'"
 ```
-rostopic pub -1 /armageddon/stop_robot std_msgs/String "data: 'STOP'" 
-```
-# D. Execução
 
-Abra dois terminais e execute os seguintes códigos. Você pode descomentar o `use_gui:=true` caso queira controlar os motores com uma interface gráfica.
+# D. Execution
+
+Open two terminals and run the following codes. You can uncomment **`use_gui:=true`** if you want to control the motors with a graphical interface.
 
 > Terminal 1
 
-```bash
+```shell
 roslaunch armageddon_moveit demo.launch #use_gui:=true
 ```
 
-No segundo terminal rode uma das aplicações abaixo:
+In the second terminal, run one of the applications below:
 
 > Terminal 2
 
-```bash
+```shell
 rosrun armageddon_robot GoRandom
 rosrun armageddon_robot GoHome
 rosrun armageddon_robot GoTypeMoves
 rosrun armageddon_robot CartesianReader
 rosrun armageddon_robot StopMove
 ```
+
 # E. ROS GUI
 
-O rqt possui um arsenal completo de ferramentas gráficas que facilitam o entendimento da abstração das linhas de código. Uma das mais interessantes é o **rqt_graph**. Nele é possível mapear a relação entre os tópicos do MoveIt e as aplicações.
+rqt has a complete arsenal of graphical tools that facilitate the understanding of the abstraction of the lines of code. One of the most interesting is **rqt_graph**. It is possible to map the relationship between MoveIt topics and applications.
 
-```bash
+```shell
 rosrun rqt_graph rqt_graph
 ```
-# F. Captura de pontos pelo simulador
 
-Para mapear os pontos utilizado na aplicação CartesianReader, é desejado que os pontos estejam dentro do espaço de trabalho do robô. Uma forma simples e rápida de obter a posição e orientação do robô dentro de seu espaço de trabalho pode ser feita através do "Motion Planning". A ideia é mover o robô com esta ferramenta, e através do tópico de *Feedback* obter a localização do TCP. A informação do tópico também pode ser visualizada com a interface gráfica rqt. 
-```
+# F. Capturing points by the simulator
+
+To map the points used in the CartesianReader application, it is desired that the points are within the robot's workspace. A simple and fast way to obtain the position and orientation of the robot within its workspace can be done through "Motion Planning". The idea is to move the robot with this tool and obtain the TCP location through the _Feedback_ topic. The topic information can also be viewed with the rqt graphical interface.
+
+```shell
  rosrun rqt_topic rqt_topic
+
 ```
 
-```bash
+```shell
 rostopic echo -c /rviz_moveit_motion_planning_display/robot_interaction_interactive_marker_topic/feedback
 ```
 
- # Extra
+# Extra
 
-Dentro dos diretórios do projeto há também imagens e vídeos para serem explorados.
+Inside the project directories, there are also images and videos to be explored.
 
-+ [Vídeos](documentos/videos)
+- [Vídeos](documentos/videos)
 
-+ [Imagens](documentos/imagens)
+- [Imagens](documentos/imagens)
 
-License
-----
+## License
 
 Copyright (C) 2020 Paulo Victor , All rights reserved.
 
